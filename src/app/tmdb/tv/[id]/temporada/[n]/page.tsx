@@ -14,7 +14,6 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
   ])
   if (!season) notFound()
 
-  const showPoster = getPosterUrl(show?.poster_path ?? null, 'w185')
   const seasonPoster = getPosterUrl(season.poster_path, 'w342')
   const episodes = season.episodes ?? []
 

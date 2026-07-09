@@ -5,7 +5,7 @@ import TmdbCarousel from '@/components/TmdbCarousel'
 import Link from 'next/link'
 
 export default async function TVPage() {
-  const [trending, topRated, crime, comedy, scifi, drama, action, airingToday, onTheAir, reality, documentary] = await Promise.all([
+  const [trending, topRated, crime, comedy, scifi, drama, action, airingToday, onTheAir, documentary] = await Promise.all([
     getTrendingTV(),
     getTopRatedTV(),
     discoverTV({ with_genres: '80', sort_by: 'popularity.desc', 'vote_count.gte': '100' }),
@@ -15,7 +15,6 @@ export default async function TVPage() {
     discoverTV({ with_genres: '10759', sort_by: 'popularity.desc', 'vote_count.gte': '100' }),
     getTVAiringToday(),
     getTVOnTheAir(),
-    discoverTV({ with_genres: '10764', sort_by: 'popularity.desc', 'vote_count.gte': '50' }),
     discoverTV({ with_genres: '99', sort_by: 'popularity.desc', 'vote_count.gte': '50' }),
   ])
 
