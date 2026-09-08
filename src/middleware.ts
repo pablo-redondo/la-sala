@@ -22,6 +22,11 @@ const MAX_TRACKED_IPS = 5000
 const hits = new Map<string, { count: number; resetAt: number }>()
 
 function getClientIp(req: NextRequest): string {
+  // Cloudflare sets this at the edge from the real TCP connection, so unlike
+  // x-forwarded-for it can't be spoofed by the client. Fall back to XFF for
+  // non-Cloudflare environments (e.g. local dev behind a plain proxy).
+  const cfIp = req.headers.get('cf-connecting-ip')
+  if (cfIp) return cfIp
   const forwarded = req.headers.get('x-forwarded-for')
   return forwarded?.split(',')[0]?.trim() || 'unknown'
 }
