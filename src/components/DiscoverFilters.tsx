@@ -60,10 +60,11 @@ export default function DiscoverFilters({ genres, tvGenres }: Props) {
 
   const chip = (active: boolean) => ({
     fontSize: 12, fontWeight: 600, padding: '6px 14px', borderRadius: 999, cursor: 'pointer' as const,
-    border: `1px solid ${active ? 'var(--accent)' : 'var(--border)'}`,
-    background: active ? 'rgba(255,255,255,0.09)' : 'var(--surface2)',
+    border: `1px solid ${active ? 'rgba(139,92,246,0.5)' : 'var(--border)'}`,
+    background: active ? 'rgba(139,92,246,0.15)' : 'var(--surface2)',
     color: active ? 'var(--text)' : 'var(--muted)',
-    transition: 'all .15s',
+    boxShadow: active ? '0 0 0 1px rgba(139,92,246,0.15), 0 4px 16px -4px rgba(139,92,246,0.4)' : 'none',
+    transition: 'all .2s var(--ease-out)',
     flexShrink: 0 as const,
   })
 

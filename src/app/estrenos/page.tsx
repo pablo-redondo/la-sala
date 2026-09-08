@@ -16,11 +16,11 @@ function NowCard({ movie }: { movie: TmdbMovieResult }) {
       <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface2)' }} className="card-img">
         {poster && <Image src={poster} alt={title} fill sizes="(max-width: 640px) 45vw, 180px" style={{ objectFit: 'cover', transition: 'transform .4s ease' }} className="card-poster" />}
         {rating && (
-          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 6, backdropFilter: 'blur(6px)' }}>
+          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 999, backdropFilter: 'blur(6px)' }}>
             ★ {rating}
           </div>
         )}
-        <div style={{ position: 'absolute', top: 7, left: 7, background: 'rgba(220,38,38,0.85)', color: '#fff', fontSize: 8, fontWeight: 800, padding: '2px 6px', borderRadius: 4 }}>EN CINES</div>
+        <div style={{ position: 'absolute', top: 7, left: 7, background: 'rgba(244,114,182,0.9)', color: '#0a0812', fontSize: 8, fontWeight: 800, padding: '2px 6px', borderRadius: 4 }}>EN CINES</div>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%', background: 'linear-gradient(to top, rgba(0,0,0,0.7), transparent)' }} />
       </div>
       <div>
@@ -61,7 +61,7 @@ function UpcomingRow({ movie }: { movie: TmdbMovieResult }) {
       </div>
       {rating && (
         <div style={{ flexShrink: 0, textAlign: 'right' }}>
-          <p style={{ fontSize: 15, fontWeight: 800, color: 'var(--accent)' }}>★ {rating}</p>
+          <p style={{ fontSize: 15, fontWeight: 800, color: 'var(--gold)' }}>★ {rating}</p>
           <p style={{ fontSize: 9, color: 'var(--muted)', marginTop: 2, fontWeight: 600 }}>TMDB</p>
         </div>
       )}
@@ -94,12 +94,12 @@ export default async function EstrenosPage() {
         <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
             <div>
-              <h1 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1 }}>Cartelera & Estrenos</h1>
-              <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>Lo que está en cines y lo que viene</p>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3.4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>Cartelera & Estrenos</h1>
+              <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 6 }}>Lo que está en cines y lo que viene</p>
             </div>
             <div style={{ display: 'flex', gap: 8 }}>
-              <Link href="#en-cines" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '5px 14px', borderRadius: 4, textDecoration: 'none' }}>En cines</Link>
-              <Link href="#proximos" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '5px 14px', borderRadius: 4, textDecoration: 'none' }}>Próximos</Link>
+              <Link href="#en-cines" className="pill-link" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '5px 14px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>En cines</Link>
+              <Link href="#proximos" className="pill-link" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '5px 14px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>Próximos</Link>
             </div>
           </div>
         </div>
@@ -111,7 +111,7 @@ export default async function EstrenosPage() {
         {nowFiltered.length > 0 && (
           <section id="en-cines">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 2, height: 16, background: 'rgba(255,255,255,0.2)', borderRadius: 2 }} />
+              <div style={{ width: 3, height: 16, background: 'var(--gradient)', borderRadius: 2 }} />
               <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>En cines ahora</h2>
               <span style={{ fontSize: 11, color: 'var(--muted)' }}>{nowFiltered.length} películas</span>
             </div>
@@ -125,7 +125,7 @@ export default async function EstrenosPage() {
         {Object.keys(grouped).length > 0 && (
           <section id="proximos">
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <div style={{ width: 2, height: 16, background: 'rgba(255,255,255,0.2)', borderRadius: 2 }} />
+              <div style={{ width: 3, height: 16, background: 'var(--gradient)', borderRadius: 2 }} />
               <h2 style={{ fontSize: 15, fontWeight: 800, color: 'var(--text)' }}>Próximos estrenos</h2>
             </div>
             {Object.entries(grouped).map(([monthKey, movies]) => {
@@ -148,11 +148,12 @@ export default async function EstrenosPage() {
       </div>
 
       <style>{`
-        .card-hover:hover .card-poster { transform: scale(1.06); }
-        .card-img { box-shadow: 0 2px 12px rgba(0,0,0,0.4); transition: box-shadow .3s; }
-        .card-hover:hover .card-img { box-shadow: 0 12px 32px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1); }
-        .upcoming-row { transition: background .12s; border-radius: 8px; padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
+        .card-hover:hover .card-poster { transform: scale(1.08); }
+        .card-img { box-shadow: 0 2px 12px rgba(0,0,0,0.4); transition: box-shadow .35s var(--ease-out), transform .35s var(--ease-out); }
+        .card-hover:hover .card-img { transform: translateY(-4px); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.75), 0 0 0 1px rgba(139,92,246,0.3); }
+        .upcoming-row { transition: background .2s var(--ease-out); border-radius: var(--radius); padding-left: 8px; padding-right: 8px; margin: 0 -8px; }
         .upcoming-row:hover { background: var(--surface2); }
+        .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; color: var(--text) !important; }
       `}</style>
     </div>
   )

@@ -39,12 +39,12 @@ export default async function TVPage() {
         <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
             <div>
-              <h1 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1 }}>Series</h1>
-              <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>Explora por género o descubre las más populares</p>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3.4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>Series</h1>
+              <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 6 }}>Explora por género o descubre las más populares</p>
             </div>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {genres.map(g => (
-                <Link key={g.href} href={g.href} style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 500, padding: '4px 12px', borderRadius: 4, textDecoration: 'none' }}>
+                <Link key={g.href} href={g.href} className="pill-link" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 500, padding: '4px 12px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out), color .2s' }}>
                   {g.label}
                 </Link>
               ))}
@@ -53,7 +53,7 @@ export default async function TVPage() {
         </div>
       </div>
 
-      <div style={{ paddingTop: 28, paddingBottom: 40, display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <div style={{ paddingTop: 40, paddingBottom: 64, display: 'flex', flexDirection: 'column', gap: 52 }}>
         {airingToday.filter(s => s.poster_path).length > 0 && (
           <TmdbCarousel items={airingToday.filter(s => s.poster_path).slice(0, 16)} title="Hoy en emisión" subtitle="Episodios que se emiten hoy" type="tv" />
         )}
@@ -69,6 +69,10 @@ export default async function TVPage() {
         <TmdbCarousel items={f(comedy)} title="Comedia" subtitle="Para reír sin parar" type="tv" viewAllHref="/discover?genre=35&type=tv" />
         <TmdbCarousel items={f(documentary)} title="Documentales" type="tv" viewAllHref="/discover?genre=99&type=tv" />
       </div>
+
+      <style>{`
+        .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; color: var(--text) !important; }
+      `}</style>
     </div>
   )
 }

@@ -13,8 +13,8 @@ export default function MediaGrid({ items, title }: Props) {
     <section>
       {title && (
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 20 }}>
-          <div style={{ width: 3, height: 20, background: 'var(--accent)', borderRadius: 2, flexShrink: 0 }} />
-          <h2 style={{ fontSize: 18, fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.2px' }}>{title}</h2>
+          <div style={{ width: 3, height: 20, background: 'var(--gradient)', borderRadius: 2, flexShrink: 0 }} />
+          <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 19, fontWeight: 700, color: 'var(--text)', letterSpacing: '-0.02em' }}>{title}</h2>
         </div>
       )}
       <div style={{

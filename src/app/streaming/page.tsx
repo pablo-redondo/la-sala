@@ -24,15 +24,15 @@ function StreamingCard({ item }: { item: TaggedItem }) {
 
   return (
     <Link href={`/tmdb/${item._type}/${item.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 6, flexShrink: 0, width: 'clamp(120px, 9.5vw, 155px)' }} className="streaming-card">
-      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 10, overflow: 'hidden', background: 'var(--surface2)' }}>
+      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface2)' }}>
         {poster
           ? <Image src={poster} alt={title} fill sizes="155px" style={{ objectFit: 'cover', transition: 'transform .3s ease' }} className="streaming-img" />
           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.4 }}><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">{item._type === 'tv' ? <><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></> : <><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></>}</svg></div>
         }
         {rating && (
-          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 7 }}>★ {rating}</div>
+          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 999 }}>★ {rating}</div>
         )}
-        <div style={{ position: 'absolute', top: 7, left: 7, background: item._type === 'tv' ? 'rgba(99,102,241,0.85)' : 'rgba(239,68,68,0.85)', color: '#fff', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
+        <div style={{ position: 'absolute', top: 7, left: 7, background: item._type === 'tv' ? 'rgba(34,211,238,0.9)' : 'rgba(244,114,182,0.9)', color: '#0a0812', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
           {item._type === 'tv' ? 'SERIE' : 'PEL.'}
         </div>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '45%', background: 'linear-gradient(to top, rgba(0,0,0,0.75), transparent)' }} />
@@ -81,12 +81,12 @@ export default async function StreamingPage() {
         <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
           <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap' }}>
             <div>
-              <h1 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1 }}>Streaming</h1>
-              <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>Lo más popular en cada plataforma en España</p>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3.4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>Streaming</h1>
+              <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 6 }}>Lo más popular en cada plataforma en España</p>
             </div>
             <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
               {PROVIDERS.map(p => (
-                <Link key={p.id} href={`#${p.id}`} style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '4px 12px', borderRadius: 4, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5 }}>
+                <Link key={p.id} href={`#${p.id}`} className="pill-link" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 600, padding: '4px 12px', borderRadius: 999, textDecoration: 'none', display: 'flex', alignItems: 'center', gap: 5, transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>
                   <span style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 14, height: 14, borderRadius: 3, background: p.gradient, color: '#fff', fontSize: 7, fontWeight: 900, letterSpacing: '-0.3px', flexShrink: 0 }}>{p.logoText}</span>
                   {p.name}
                 </Link>
@@ -114,7 +114,7 @@ export default async function StreamingPage() {
                       {movieCount} películas · {tvCount} series
                     </p>
                   </div>
-                  <Link href={`/discover?sort=popularity.desc&type=movie&provider=${provider.id}`} style={{ fontSize: 11, color: 'var(--muted)', textDecoration: 'none', fontWeight: 600, flexShrink: 0 }}>Ver más →</Link>
+                  <Link href={`/discover?sort=popularity.desc&type=movie&provider=${provider.id}`} className="view-more-link" style={{ fontSize: 11, color: 'var(--muted2)', textDecoration: 'none', fontWeight: 600, flexShrink: 0, transition: 'color .2s' }}>Ver más →</Link>
                 </div>
               </div>
 
@@ -134,9 +134,11 @@ export default async function StreamingPage() {
       </div>
 
       <style>{`
-        .streaming-card:hover .streaming-img { transform: scale(1.06); }
-        .streaming-row .streaming-card { transition: transform .2s ease; }
-        .streaming-row .streaming-card:hover { transform: translateY(-4px); }
+        .streaming-card:hover .streaming-img { transform: scale(1.08); }
+        .streaming-row .streaming-card { transition: transform .35s var(--ease-out), filter .35s var(--ease-out); }
+        .streaming-row .streaming-card:hover { transform: translateY(-4px); filter: drop-shadow(0 12px 24px rgba(0,0,0,0.5)); }
+        .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; color: var(--text) !important; }
+        .view-more-link:hover { color: var(--violet) !important; }
         [data-platform-scroll] { scrollbar-width: none; -ms-overflow-style: none; }
         [data-platform-scroll]::-webkit-scrollbar { display: none; }
       `}</style>

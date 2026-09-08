@@ -11,17 +11,17 @@ function MovieCard({ item, type }: { item: TmdbMovieResult; type: 'movie' | 'tv'
 
   return (
     <Link href={`/tmdb/${type}/${item.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 10, overflow: 'hidden', background: 'var(--surface2)' }} className="search-card">
+      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface2)' }} className="search-card">
         {poster
           ? <Image src={poster} alt={title} fill sizes="(max-width: 640px) 45vw, 180px" style={{ objectFit: 'cover' }} />
           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.4 }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round">{type === 'tv' ? <><rect x="2" y="7" width="20" height="15" rx="2"/><polyline points="17 2 12 7 7 2"/></> : <><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></>}</svg></div>
         }
         {rating && (
-          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.85)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 7 }}>
+          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.85)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 999 }}>
             ★ {rating}
           </div>
         )}
-        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(99,102,241,0.85)' : 'rgba(239,68,68,0.85)', color: '#fff', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
+        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(34,211,238,0.9)' : 'rgba(244,114,182,0.9)', color: '#0a0812', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
           {type === 'tv' ? 'SERIE' : 'PEL.'}
         </div>
       </div>
@@ -39,7 +39,7 @@ function PersonCard({ person }: { person: TmdbPersonResult }) {
 
   return (
     <Link href={`/person/${person.id}`} style={{ textDecoration: 'none', display: 'flex', flexDirection: 'column', gap: 8 }}>
-      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 10, overflow: 'hidden', background: 'var(--surface2)' }} className="search-card">
+      <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface2)' }} className="search-card">
         {photo
           ? <Image src={photo} alt={person.name} fill sizes="180px" style={{ objectFit: 'cover' }} />
           : <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.4 }}><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
@@ -60,7 +60,7 @@ function SectionGrid({ title, children }: { title: string; children: React.React
   return (
     <section>
       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-        <div style={{ width: 2, height: 16, background: 'rgba(255,255,255,0.25)', borderRadius: 2 }} />
+        <div style={{ width: 3, height: 16, background: 'var(--gradient)', borderRadius: 2 }} />
         <h2 style={{ fontSize: 14, fontWeight: 800, color: 'var(--text)' }}>{title}</h2>
       </div>
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(135px, 1fr))', gap: 14 }}>
@@ -82,15 +82,15 @@ export default async function SearchPage({
       <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
         <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
           <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
-            <h1 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1 }}>Buscar</h1>
-            <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>Películas, series y personas</p>
+            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3.4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>Buscar</h1>
+            <p style={{ fontSize: 12, color: 'var(--muted2)', marginTop: 6 }}>Películas, series y personas</p>
           </div>
         </div>
         <div className="page-inner" style={{ paddingTop: 32, paddingBottom: 40, textAlign: 'center' }}>
           <p style={{ fontSize: 14, color: 'var(--muted)', marginBottom: 24 }}>Prueba con alguno de estos términos</p>
           <div style={{ display: 'flex', gap: 8, justifyContent: 'center', flexWrap: 'wrap' }}>
             {['Inception', 'Breaking Bad', 'Parasite', 'Interstellar', 'Christopher Nolan'].map(term => (
-              <Link key={term} href={`/search?q=${encodeURIComponent(term)}`} style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 12, fontWeight: 600, padding: '7px 16px', borderRadius: 6, textDecoration: 'none' }}>
+              <Link key={term} href={`/search?q=${encodeURIComponent(term)}`} className="pill-link" style={{ background: 'rgba(139,92,246,0.08)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 12, fontWeight: 600, padding: '7px 16px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>
                 {term}
               </Link>
             ))}
@@ -109,7 +109,7 @@ export default async function SearchPage({
       <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
           <h1 style={{ fontSize: 'clamp(20px, 3vw, 30px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.6px', lineHeight: 1 }}>
-            &ldquo;<span style={{ color: 'var(--accent)' }}>{q}</span>&rdquo;
+            &ldquo;<span className="text-gradient">{q}</span>&rdquo;
           </h1>
           <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>
             {totalResults === 0
@@ -124,7 +124,7 @@ export default async function SearchPage({
           <div style={{ textAlign: 'center', paddingTop: 32, paddingBottom: 32 }}>
             <p style={{ fontSize: 17, fontWeight: 700, color: 'var(--text)', marginBottom: 8 }}>Sin resultados</p>
             <p style={{ fontSize: 13, color: 'var(--muted)', marginBottom: 24 }}>No encontramos nada para &ldquo;{q}&rdquo;. Prueba con otro término.</p>
-            <Link href="/" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 12, fontWeight: 700, padding: '8px 18px', borderRadius: 8, textDecoration: 'none' }}>
+            <Link href="/" className="btn-ghost" style={{ display: 'inline-flex', alignItems: 'center', gap: 8, background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 12, fontWeight: 700, padding: '8px 18px', borderRadius: 'var(--radius)', textDecoration: 'none' }}>
               ← Inicio
             </Link>
           </div>
@@ -150,8 +150,9 @@ export default async function SearchPage({
       </div>
 
       <style>{`
-        .search-card { transition: transform .25s ease, box-shadow .25s ease; }
-        .search-card:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 20px 50px rgba(0,0,0,0.7); }
+        .search-card { transition: transform .35s var(--ease-out), box-shadow .35s var(--ease-out); }
+        .search-card:hover { transform: translateY(-4px); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.75), 0 0 0 1px rgba(139,92,246,0.3); }
+        .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; color: var(--text) !important; }
       `}</style>
     </div>
   )

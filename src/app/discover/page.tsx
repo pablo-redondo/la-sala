@@ -26,11 +26,11 @@ function ResultCard({ item, type }: { item: TmdbMovieResult; type: 'movie' | 'tv
       <div style={{ position: 'relative', aspectRatio: '2/3', borderRadius: 'var(--radius)', overflow: 'hidden', background: 'var(--surface2)' }} className="result-img">
         {poster && <Image src={poster} alt={title} fill sizes="(max-width: 640px) 45vw, 200px" style={{ objectFit: 'cover', transition: 'transform .4s ease' }} className="result-poster" />}
         {rating && (
-          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 6, backdropFilter: 'blur(6px)', border: '1px solid rgba(212,152,42,0.25)' }}>
+          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.88)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 999, backdropFilter: 'blur(6px)', border: '1px solid rgba(251,191,36,0.3)' }}>
             ★ {rating}
           </div>
         )}
-        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(99,102,241,0.9)' : 'rgba(220,38,38,0.9)', color: '#fff', fontSize: 8, fontWeight: 800, padding: '2px 6px', borderRadius: 4, backdropFilter: 'blur(6px)' }}>
+        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(34,211,238,0.9)' : 'rgba(244,114,182,0.9)', color: '#0a0812', fontSize: 8, fontWeight: 800, padding: '2px 6px', borderRadius: 4, backdropFilter: 'blur(6px)' }}>
           {type === 'tv' ? 'SERIE' : 'PEL.'}
         </div>
         <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '35%', background: 'linear-gradient(to top, rgba(0,0,0,0.65), transparent)' }} />
@@ -83,7 +83,7 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
       {/* Compact header */}
       <div style={{ borderBottom: '1px solid var(--border)', background: 'var(--surface)' }}>
         <div className="page-inner" style={{ paddingTop: 28, paddingBottom: 20 }}>
-          <h1 style={{ fontSize: 'clamp(22px, 3vw, 32px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.8px', lineHeight: 1 }}>Descubrir</h1>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(24px, 3.4vw, 36px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>Descubrir</h1>
           <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 5 }}>
             {data.total_results.toLocaleString('es')} {type === 'tv' ? 'series' : 'películas'}{activeGenreName ? ` · ${activeGenreName}` : ''}
           </p>
@@ -102,8 +102,8 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
         {/* Results */}
         {results.length === 0 ? (
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', padding: '48px 0', gap: 10 }}>
-            <div style={{ width: 44, height: 44, borderRadius: 10, background: 'var(--surface2)', border: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 4 }}>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--muted)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+            <div style={{ width: 52, height: 52, borderRadius: 14, background: 'var(--gradient-soft)', border: '1px solid var(--border2)', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: 4 }}>
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--muted2)" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
             </div>
             <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)' }}>Sin resultados</p>
             <p style={{ fontSize: 13, color: 'var(--muted)' }}>Prueba con otros filtros</p>
@@ -129,9 +129,9 @@ export default async function DiscoverPage({ searchParams }: { searchParams: Pro
       </div>
 
       <style>{`
-        .result-card:hover .result-poster { transform: scale(1.06); }
-        .result-img { box-shadow: 0 2px 12px rgba(0,0,0,0.4); transition: box-shadow .3s; }
-        .result-card:hover .result-img { box-shadow: 0 12px 32px rgba(0,0,0,0.7), 0 0 0 1px rgba(255,255,255,0.1); }
+        .result-card:hover .result-poster { transform: scale(1.08); }
+        .result-img { box-shadow: 0 2px 12px rgba(0,0,0,0.4); transition: box-shadow .35s var(--ease-out), transform .35s var(--ease-out); }
+        .result-card:hover .result-img { transform: translateY(-4px); box-shadow: 0 16px 36px -8px rgba(0,0,0,0.75), 0 0 0 1px rgba(139,92,246,0.3); }
       `}</style>
     </div>
   )
@@ -147,12 +147,12 @@ function PaginationLink({ sp, page, label, active }: { sp: SearchParams; page: n
   params.set('page', String(page))
 
   return (
-    <Link href={`/discover?${params.toString()}`} style={{
-      padding: '7px 14px', borderRadius: 6,
-      background: active ? 'var(--accent)' : 'var(--surface2)',
-      color: active ? '#000' : 'var(--muted2)',
+    <Link href={`/discover?${params.toString()}`} className={active ? 'btn-gradient' : 'btn-ghost'} style={{
+      padding: '7px 14px', borderRadius: 'var(--radius)',
+      background: active ? undefined : 'var(--surface2)',
+      color: active ? undefined : 'var(--muted2)',
       fontSize: 13, fontWeight: active ? 800 : 500,
-      textDecoration: 'none', border: '1px solid var(--border)',
+      textDecoration: 'none', border: active ? 'none' : '1px solid var(--border)',
       minWidth: 36, textAlign: 'center' as const,
     }}>{label}</Link>
   )

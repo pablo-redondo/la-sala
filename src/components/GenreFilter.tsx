@@ -22,11 +22,11 @@ export default function GenreFilter({ genres }: { genres: Genre[] }) {
     <select
       value={current}
       onChange={handleChange}
-      className="bg-white/10 border border-white/10 text-white text-sm rounded-lg px-3 py-2 focus:outline-none focus:border-white/30 cursor-pointer"
+      className="bg-white/5 border border-white/10 text-white text-sm rounded-full px-4 py-2 outline-none transition-colors cursor-pointer hover:border-violet-400/40 focus:border-violet-400"
     >
       <option value="">Todos los géneros</option>
       {genres.map((g) => (
-        <option key={g.id} value={String(g.id)} className="bg-[#1a1a1a]">
+        <option key={g.id} value={String(g.id)} className="bg-[#191622]">
           {g.name}
         </option>
       ))}
