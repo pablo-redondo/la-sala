@@ -35,15 +35,11 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function FactRow({ label, value }: { label: string; value: string | null }) {
   if (!value) return null
   return (
-    <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
+    <div style={{ padding: '10px 0', borderBottom: '1px solid var(--border)' }}>
       <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>{label}</p>
       <p style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500, lineHeight: 1.45 }}>{value}</p>
     </div>
   )
-}
-
-function Sidebar({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>{children}</div>
 }
 
 export default async function TmdbTVPage({ params }: { params: Promise<{ id: string }> }) {
@@ -70,8 +66,8 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
   const companies = (show.production_companies ?? []).filter(c => c.logo_path).slice(0, 8)
   const isEnded = show.status === 'Ended' || show.status === 'Canceled'
 
-  const hasSidebarContent = show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0]
-    || contentRating || show.original_name || show.spoken_languages?.length || companies.length || providers
+  const hasFacts = show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0]
+    || contentRating || show.original_name || show.spoken_languages?.length || companies.length
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -166,16 +162,13 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
           </div>
         )}
 
-        {/* Content grid — main column + sidebar */}
-        <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
-
-          {/* Main column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 36, minWidth: 0 }}>
+        {/* Single-width content column — every section only takes the space its own content needs */}
+        <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 36 }}>
 
             {show.overview && (
               <div>
                 <SectionLabel>Sinopsis</SectionLabel>
-                <p style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.8, opacity: 0.85 }}>{show.overview}</p>
+                <p style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.8, opacity: 0.85, maxWidth: '85ch' }}>{show.overview}</p>
               </div>
             )}
 
@@ -234,45 +227,48 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
                 </div>
               </div>
             )}
-          </div>
 
-          {/* Sidebar */}
-          {hasSidebarContent && (
-            <Sidebar>
-              {providers && <WatchProvidersSection providers={providers} />}
-
-              {(show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0] || contentRating || show.original_name || show.spoken_languages?.length || companies.length) ? (
-                <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
-                  <SectionLabel>Ficha técnica</SectionLabel>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
-                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} /></div>
-                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Red" value={show.networks?.map(n => n.name).join(', ') || null} /></div>
-                    <FactRow label="Estreno" value={show.first_air_date || null} />
-                    <FactRow label="Último ep." value={show.last_air_date || null} />
-                    <FactRow label="Duración ep." value={show.episode_run_time?.[0] ? `${show.episode_run_time[0]} min` : null} />
-                    <FactRow label="Clasificación" value={contentRating} />
-                    <FactRow label="Idioma orig." value={show.original_name ?? null} />
-                    <FactRow label="Idiomas" value={show.spoken_languages?.map(l => l.name).join(', ') || null} />
+            {/* Info cards — side by side as peers, not a tall sidebar forced against a shorter column */}
+            {(providers || hasFacts) && (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
+                {providers && (
+                  <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420 }}>
+                    <WatchProvidersSection providers={providers} />
                   </div>
+                )}
 
-                  {companies.length > 0 && (
-                    <div style={{ paddingTop: 12 }}>
-                      <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 9 }}>Producción</p>
-                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
-                        {companies.map(c => (
-                          <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 32, width: 68, flexShrink: 0 }}>
-                            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                              <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="68px" style={{ objectFit: 'contain' }} />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
+                {hasFacts ? (
+                  <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
+                    <SectionLabel>Ficha técnica</SectionLabel>
+                    <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
+                      <div style={{ gridColumn: '1 / -1' }}><FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} /></div>
+                      <div style={{ gridColumn: '1 / -1' }}><FactRow label="Red" value={show.networks?.map(n => n.name).join(', ') || null} /></div>
+                      <FactRow label="Estreno" value={show.first_air_date || null} />
+                      <FactRow label="Último ep." value={show.last_air_date || null} />
+                      <FactRow label="Duración ep." value={show.episode_run_time?.[0] ? `${show.episode_run_time[0]} min` : null} />
+                      <FactRow label="Clasificación" value={contentRating} />
+                      <FactRow label="Idioma orig." value={show.original_name ?? null} />
+                      <FactRow label="Idiomas" value={show.spoken_languages?.map(l => l.name).join(', ') || null} />
                     </div>
-                  )}
-                </div>
-              ) : null}
-            </Sidebar>
-          )}
+
+                    {companies.length > 0 && (
+                      <div style={{ paddingTop: 12 }}>
+                        <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 9 }}>Producción</p>
+                        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+                          {companies.map(c => (
+                            <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 32, width: 68, flexShrink: 0 }}>
+                              <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                                <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="68px" style={{ objectFit: 'contain' }} />
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                ) : null}
+              </div>
+            )}
         </div>
 
         <div style={{ height: 48 }} />
@@ -286,7 +282,6 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
 
       <style>{`
         @media (max-width: 600px) { .hero-row { flex-direction: column; align-items: flex-start !important; } }
-        @media (max-width: 900px) { .detail-grid { grid-template-columns: minmax(0,1fr) !important; } }
         .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .season-card:hover .season-poster { transform: scale(1.05); }

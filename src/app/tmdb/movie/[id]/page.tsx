@@ -41,15 +41,11 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function FactRow({ label, value }: { label: string; value: string | null }) {
   if (!value) return null
   return (
-    <div style={{ padding: '12px 0', borderBottom: '1px solid var(--border)' }}>
+    <div style={{ padding: '10px 0', borderBottom: '1px solid var(--border)' }}>
       <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 5 }}>{label}</p>
       <p style={{ fontSize: 13, color: 'var(--text)', fontWeight: 500, lineHeight: 1.45 }}>{value}</p>
     </div>
   )
-}
-
-function Sidebar({ children }: { children: React.ReactNode }) {
-  return <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>{children}</div>
 }
 
 export default async function TmdbMoviePage({ params }: { params: Promise<{ id: string }> }) {
@@ -80,8 +76,8 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
 
   const companies = (movie.production_companies ?? []).filter(c => c.logo_path).slice(0, 8)
 
-  const hasSidebarContent = directors.length || writers.length || movie.release_date || movie.runtime || certification
-    || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length || providers
+  const hasFacts = directors.length || writers.length || movie.release_date || movie.runtime || certification
+    || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -150,94 +146,93 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
           </div>
         </div>
 
-        {/* Content grid — main column + sidebar */}
-        <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
+        {/* Single-width content column — every section only takes the space its own content needs */}
+        <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 36 }}>
 
-          {/* Main column */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 36, minWidth: 0 }}>
+          {movie.overview && (
+            <div>
+              <SectionLabel>Sinopsis</SectionLabel>
+              <p style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.8, opacity: 0.85, maxWidth: '85ch' }}>{movie.overview}</p>
+            </div>
+          )}
 
-            {movie.overview && (
+          {cast.length > 0 && (
+            <div>
+              <SectionLabel>Reparto</SectionLabel>
+              <CastSection cast={cast} />
+            </div>
+          )}
+
+          {movie.belongs_to_collection && (
+            <Link href={`/tmdb/collection/${movie.belongs_to_collection.id}`} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'var(--gradient-soft)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: 'var(--radius-lg)', padding: '14px 20px', textDecoration: 'none', flexWrap: 'wrap' }}>
               <div>
-                <SectionLabel>Sinopsis</SectionLabel>
-                <p style={{ color: 'var(--text)', fontSize: 14, lineHeight: 1.8, opacity: 0.85 }}>{movie.overview}</p>
+                <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--violet)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>Parte de la saga</p>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{movie.belongs_to_collection.name}</p>
               </div>
-            )}
+              <span style={{ color: 'var(--text)', fontSize: 12, fontWeight: 600 }}>Ver saga →</span>
+            </Link>
+          )}
 
-            {cast.length > 0 && (
-              <div>
-                <SectionLabel>Reparto</SectionLabel>
-                <CastSection cast={cast} />
+          {galleryBackdrops.length > 1 && (
+            <div>
+              <SectionLabel>Imágenes</SectionLabel>
+              <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }} className="scrollbar-hide">
+                {galleryBackdrops.map((img, i) => (
+                  <div key={i} className="gallery-thumb" style={{ flexShrink: 0, borderRadius: 10, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9', background: 'var(--surface2)', transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)' }}>
+                    <Image src={`https://image.tmdb.org/t/p/w780${img.file_path}`} alt="" fill sizes="300px" style={{ objectFit: 'cover' }} />
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
-            {/* Collection banner — lower down, inside the main column */}
-            {movie.belongs_to_collection && (
-              <Link href={`/tmdb/collection/${movie.belongs_to_collection.id}`} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'var(--gradient-soft)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: 'var(--radius-lg)', padding: '14px 20px', textDecoration: 'none', flexWrap: 'wrap' }}>
-                <div>
-                  <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--violet)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>Parte de la saga</p>
-                  <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{movie.belongs_to_collection.name}</p>
-                </div>
-                <span style={{ color: 'var(--text)', fontSize: 12, fontWeight: 600 }}>Ver saga →</span>
-              </Link>
-            )}
-
-            {galleryBackdrops.length > 1 && (
-              <div>
-                <SectionLabel>Imágenes</SectionLabel>
-                <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }} className="scrollbar-hide">
-                  {galleryBackdrops.map((img, i) => (
-                    <div key={i} className="gallery-thumb" style={{ flexShrink: 0, borderRadius: 10, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9', background: 'var(--surface2)', transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)' }}>
-                      <Image src={`https://image.tmdb.org/t/p/w780${img.file_path}`} alt="" fill sizes="300px" style={{ objectFit: 'cover' }} />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {(movie.reviews?.results?.length ?? 0) > 0 && (
-              <div>
-                <SectionLabel>Reseñas</SectionLabel>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
-                  {movie.reviews.results.slice(0, 3).map(r => (
-                    <div key={r.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '16px 18px' }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
-                        <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#0a0812', flexShrink: 0 }}>
-                          {r.author.charAt(0).toUpperCase()}
-                        </div>
-                        <div style={{ minWidth: 0 }}>
-                          <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{r.author}</p>
-                          <p style={{ fontSize: 10, color: 'var(--muted)' }}>{new Date(r.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}</p>
-                        </div>
-                        {r.author_details?.rating != null && (
-                          <span style={{ marginLeft: 'auto', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 6, flexShrink: 0 }}>★ {r.author_details.rating}/10</span>
-                        )}
+          {(movie.reviews?.results?.length ?? 0) > 0 && (
+            <div>
+              <SectionLabel>Reseñas</SectionLabel>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
+                {movie.reviews.results.slice(0, 3).map(r => (
+                  <div key={r.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '16px 18px' }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+                      <div style={{ width: 28, height: 28, borderRadius: '50%', background: 'var(--gradient)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 11, fontWeight: 700, color: '#0a0812', flexShrink: 0 }}>
+                        {r.author.charAt(0).toUpperCase()}
                       </div>
-                      <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{r.content}</p>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: 12, fontWeight: 700, color: 'var(--text)' }}>{r.author}</p>
+                        <p style={{ fontSize: 10, color: 'var(--muted)' }}>{new Date(r.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}</p>
+                      </div>
+                      {r.author_details?.rating != null && (
+                        <span style={{ marginLeft: 'auto', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 6, flexShrink: 0 }}>★ {r.author_details.rating}/10</span>
+                      )}
                     </div>
-                  ))}
-                </div>
+                    <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{r.content}</p>
+                  </div>
+                ))}
               </div>
-            )}
+            </div>
+          )}
 
-            {(movie.keywords?.keywords?.length ?? 0) > 0 && (
-              <div>
-                <SectionLabel>Temas</SectionLabel>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {movie.keywords.keywords.slice(0, 12).map(kw => (
-                    <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
-                  ))}
-                </div>
+          {(movie.keywords?.keywords?.length ?? 0) > 0 && (
+            <div>
+              <SectionLabel>Temas</SectionLabel>
+              <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                {movie.keywords.keywords.slice(0, 12).map(kw => (
+                  <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
+                ))}
               </div>
-            )}
-          </div>
+            </div>
+          )}
 
-          {/* Sidebar */}
-          {hasSidebarContent && (
-            <Sidebar>
-              {providers && <WatchProvidersSection providers={providers} />}
+          {/* Info cards — side by side as peers, not a tall sidebar forced against a shorter column */}
+          {(providers || hasFacts) && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
+              {providers && (
+                <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420 }}>
+                  <WatchProvidersSection providers={providers} />
+                </div>
+              )}
 
-              {(directors.length || writers.length || movie.release_date || movie.runtime || certification || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length) ? (
-                <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
+              {hasFacts ? (
+                <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
                     <div style={{ gridColumn: '1 / -1' }}><FactRow label="Dirección" value={directors.map(d => d.name).join(', ') || null} /></div>
@@ -266,7 +261,7 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                   )}
                 </div>
               ) : null}
-            </Sidebar>
+            </div>
           )}
         </div>
 
@@ -281,7 +276,6 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
 
       <style>{`
         @media (max-width: 600px) { .hero-row { flex-direction: column; align-items: flex-start !important; } }
-        @media (max-width: 900px) { .detail-grid { grid-template-columns: minmax(0,1fr) !important; } }
         .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; }
