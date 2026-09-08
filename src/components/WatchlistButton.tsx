@@ -24,14 +24,15 @@ export default function WatchlistButton({ movie }: { movie: OmdbDetail }) {
   return (
     <button
       onClick={toggle}
+      className={inList ? 'btn-gradient' : 'btn-ghost'}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8,
-        background: inList ? '#d4982a' : 'rgba(212,152,42,0.1)',
-        color: inList ? '#0d0b08' : '#f0ece3',
-        border: inList ? '1px solid #d4982a' : '1px solid rgba(212,152,42,0.25)',
+        background: inList ? undefined : 'rgba(139,92,246,0.1)',
+        color: inList ? undefined : 'var(--text)',
+        border: inList ? 'none' : '1px solid rgba(139,92,246,0.3)',
         fontWeight: 700, fontSize: 13,
-        padding: '11px 22px', borderRadius: 10,
-        cursor: 'pointer', transition: 'all .2s',
+        padding: '11px 22px', borderRadius: 'var(--radius)',
+        cursor: 'pointer',
       }}
     >
       {inList ? '✓ En mi lista' : '+ Mi lista'}

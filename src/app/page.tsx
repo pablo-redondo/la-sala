@@ -37,7 +37,7 @@ export default async function HomePage() {
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       <TmdbHero items={heroItems} type="movie" />
 
-      <div style={{ paddingTop: 24, paddingBottom: 48, display: 'flex', flexDirection: 'column', gap: 28 }}>
+      <div style={{ paddingTop: 40, paddingBottom: 72, display: 'flex', flexDirection: 'column', gap: 56 }}>
         {nowPlaying.filter(m => m.poster_path).length > 0 && (
           <TmdbCarousel
             items={nowPlaying.filter(m => m.poster_path).slice(0, 14)}

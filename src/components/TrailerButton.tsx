@@ -19,11 +19,11 @@ export default function TrailerButton({ videoKey }: { videoKey: string }) {
         onClick={() => setOpen(true)}
         style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
-          background: 'rgba(212,152,42,0.1)', border: '1px solid rgba(212,152,42,0.25)',
-          color: '#f0ece3', fontWeight: 700, fontSize: 13,
-          padding: '10px 20px', borderRadius: 10, cursor: 'pointer',
+          background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.3)',
+          color: 'var(--text)', fontWeight: 700, fontSize: 13,
+          padding: '10px 20px', borderRadius: 'var(--radius)', cursor: 'pointer',
           backdropFilter: 'blur(12px)',
-          transition: 'background .15s, border-color .15s',
+          transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out), transform .15s var(--ease-out)',
         }}
       >
         <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -52,8 +52,8 @@ export default function TrailerButton({ videoKey }: { videoKey: string }) {
               onClick={() => setOpen(false)}
               style={{
                 position: 'absolute', top: -44, right: 0,
-                background: 'rgba(212,152,42,0.1)', border: '1px solid rgba(212,152,42,0.2)',
-                color: '#f0ece3', fontSize: 14, fontWeight: 700,
+                background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)',
+                color: 'var(--text)', fontSize: 14, fontWeight: 700,
                 padding: '6px 14px', borderRadius: 8, cursor: 'pointer',
                 display: 'flex', alignItems: 'center', gap: 6,
               }}

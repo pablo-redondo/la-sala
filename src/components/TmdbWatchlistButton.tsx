@@ -37,11 +37,11 @@ export default function TmdbWatchlistButton({ tmdbId, type, title, posterPath, y
       onClick={toggle}
       style={{
         display: 'inline-flex', alignItems: 'center', gap: 8,
-        background: inList ? 'rgba(239,68,68,0.15)' : 'rgba(212,152,42,0.08)',
-        border: `1px solid ${inList ? 'rgba(239,68,68,0.4)' : 'rgba(212,152,42,0.2)'}`,
-        color: inList ? '#fca5a5' : '#f0ece3',
+        background: inList ? 'rgba(244,114,182,0.15)' : 'rgba(139,92,246,0.08)',
+        border: `1px solid ${inList ? 'rgba(244,114,182,0.4)' : 'rgba(139,92,246,0.25)'}`,
+        color: inList ? '#f9a8d4' : 'var(--text)',
         fontSize: 13, fontWeight: 700,
-        padding: '10px 18px', borderRadius: 10, cursor: 'pointer',
+        padding: '10px 18px', borderRadius: 'var(--radius)', cursor: 'pointer',
         transform: animating ? 'scale(0.94)' : 'scale(1)',
         transition: 'all .2s ease',
       }}

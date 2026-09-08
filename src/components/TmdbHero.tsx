@@ -48,6 +48,12 @@ function TmdbHeroInner({ items, type }: Props) {
   return (
     <section style={{ position: 'relative', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
 
+      {/* Aurora accent blobs */}
+      <div className="aurora-bg">
+        <div className="aurora-blob" style={{ width: 480, height: 480, top: '-15%', left: '5%', background: 'radial-gradient(circle, rgba(139,92,246,0.55), transparent 70%)' }} />
+        <div className="aurora-blob" style={{ width: 420, height: 420, top: '10%', right: '10%', background: 'radial-gradient(circle, rgba(34,211,238,0.4), transparent 70%)', animationDelay: '-8s' }} />
+      </div>
+
       {/* Background */}
       <div style={{
         position: 'absolute', inset: 0,
@@ -56,57 +62,57 @@ function TmdbHeroInner({ items, type }: Props) {
       }}>
         {(backdrop || poster) && (
           <Image src={backdrop ?? poster!} alt="" fill priority sizes="100vw"
-            style={{ objectFit: 'cover', filter: 'brightness(0.4) saturate(1.1)' }} />
+            style={{ objectFit: 'cover', filter: 'brightness(0.38) saturate(1.15)' }} />
         )}
       </div>
 
       {/* Gradients */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to right, rgba(13,11,8,0.97) 0%, rgba(13,11,8,0.80) 45%, rgba(13,11,8,0.25) 75%, transparent 100%)' }} />
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to top, rgba(13,11,8,1) 0%, transparent 35%)' }} />
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(13,11,8,0.5) 0%, transparent 15%)' }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to right, rgba(8,7,13,0.97) 0%, rgba(8,7,13,0.82) 45%, rgba(8,7,13,0.3) 75%, transparent 100%)' }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to top, rgba(8,7,13,1) 0%, transparent 35%)' }} />
+      <div style={{ position: 'absolute', inset: 0, zIndex: 1, background: 'linear-gradient(to bottom, rgba(8,7,13,0.5) 0%, transparent 15%)' }} />
 
       {/* Main content */}
       <div className="page-inner" style={{
         position: 'relative', zIndex: 2,
         display: 'flex', alignItems: 'center',
         gap: 'clamp(20px, 3vw, 48px)',
-        paddingTop: 'clamp(36px, 5vh, 64px)',
-        paddingBottom: 'clamp(24px, 3vh, 40px)',
+        paddingTop: 'clamp(44px, 6vh, 76px)',
+        paddingBottom: 'clamp(28px, 3.5vh, 44px)',
         opacity: fading ? 0 : 1,
         transform: fading ? 'translateY(6px)' : 'translateY(0)',
         transition: 'opacity .3s, transform .3s',
       }}>
 
         {/* Left info */}
-        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 12 }}>
+        <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', gap: 14 }}>
 
           {/* Badges */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap' }}>
             <span style={{
-              display: 'inline-flex', alignItems: 'center', gap: 5,
-              background: 'rgba(212,152,42,0.1)', border: '1px solid rgba(212,152,42,0.3)',
-              color: '#d4982a', fontSize: 10, fontWeight: 800,
-              padding: '3px 10px', borderRadius: 999, letterSpacing: '0.1em', textTransform: 'uppercase',
-            }}>
-              <span style={{ width: 5, height: 5, background: 'var(--accent)', borderRadius: '50%', animation: 'pulse 2s infinite' }} />
+              display: 'inline-flex', alignItems: 'center', gap: 6,
+              background: 'var(--gradient-soft)', border: '1px solid rgba(139,92,246,0.35)',
+              fontSize: 10, fontWeight: 800,
+              padding: '4px 11px', borderRadius: 999, letterSpacing: '0.1em', textTransform: 'uppercase',
+            }} className="text-gradient">
+              <span style={{ width: 5, height: 5, background: 'var(--cyan)', borderRadius: '50%', animation: 'pulseDot 2s infinite' }} />
               Destacado
             </span>
-            {year && <span style={{ color: 'var(--muted)', fontSize: 12 }}>{year}</span>}
+            {year && <span style={{ color: 'var(--muted2)', fontSize: 12 }}>{year}</span>}
             {genres.map(g => (
               <span key={g} style={{
-                background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.1)',
-                color: 'var(--muted)', fontSize: 11, padding: '2px 10px', borderRadius: 999,
+                background: 'rgba(255,255,255,0.06)', border: '1px solid rgba(255,255,255,0.1)',
+                color: 'var(--muted2)', fontSize: 11, padding: '2px 10px', borderRadius: 999,
               }}>{g}</span>
             ))}
           </div>
 
-          {/* Title — Bebas Neue */}
+          {/* Title — Bricolage Grotesque */}
           <h1 style={{
-            fontFamily: 'var(--font-bebas), sans-serif',
-            fontSize: 'clamp(48px, 6.5vw, 90px)',
-            fontWeight: 400,
-            lineHeight: 0.9,
-            letterSpacing: '2px',
+            fontFamily: 'var(--font-display)',
+            fontSize: 'clamp(42px, 6vw, 80px)',
+            fontWeight: 800,
+            lineHeight: 0.98,
+            letterSpacing: '-0.03em',
             color: '#fff',
             margin: 0,
           }}>{title}</h1>
@@ -114,35 +120,35 @@ function TmdbHeroInner({ items, type }: Props) {
           {/* Rating */}
           {item.vote_average > 0 && (
             <div style={{ display: 'flex', alignItems: 'baseline', gap: 5 }}>
-              <span style={{ color: 'var(--accent)', fontSize: 16 }}>★</span>
+              <span style={{ color: 'var(--gold)', fontSize: 16 }}>★</span>
               <span style={{ color: '#fff', fontWeight: 900, fontSize: 18 }}>{item.vote_average.toFixed(1)}</span>
-              <span style={{ color: 'var(--muted)', fontSize: 12 }}>/10 · TMDB</span>
+              <span style={{ color: 'var(--muted2)', fontSize: 12 }}>/10 · TMDB</span>
             </div>
           )}
 
           {/* Overview */}
           {item.overview && (
             <p style={{
-              color: 'var(--muted)', fontSize: 13, lineHeight: 1.65, margin: 0,
+              color: 'var(--muted2)', fontSize: 13, lineHeight: 1.65, margin: 0,
               display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden',
               maxWidth: '52ch',
             }}>{item.overview}</p>
           )}
 
           {/* Buttons */}
-          <div style={{ display: 'flex', gap: 10, paddingTop: 4 }}>
-            <Link href={href} style={{
-              background: '#d4982a', color: '#0d0b08', fontWeight: 800, fontSize: 13,
-              padding: '11px 26px', borderRadius: 10, textDecoration: 'none',
+          <div style={{ display: 'flex', gap: 10, paddingTop: 6 }}>
+            <Link href={href} className="btn-gradient" style={{
+              fontSize: 13,
+              padding: '12px 26px', borderRadius: 'var(--radius)', textDecoration: 'none',
               display: 'inline-flex', alignItems: 'center', gap: 7,
             }}>
               <svg width="11" height="11" viewBox="0 0 12 12" fill="currentColor"><path d="M3 2l7 4-7 4V2z"/></svg>
               Ver detalles
             </Link>
-            <Link href={href} style={{
-              background: 'rgba(212,152,42,0.08)', border: '1px solid rgba(212,152,42,0.2)',
-              color: '#f0ece3', fontWeight: 600, fontSize: 13,
-              padding: '11px 22px', borderRadius: 10, textDecoration: 'none',
+            <Link href={href} className="btn-ghost" style={{
+              background: 'rgba(255,255,255,0.05)', border: '1px solid var(--border2)',
+              color: '#f5f3fb', fontWeight: 600, fontSize: 13,
+              padding: '12px 22px', borderRadius: 'var(--radius)', textDecoration: 'none',
               backdropFilter: 'blur(12px)',
             }}>
               + Mi lista
@@ -153,9 +159,9 @@ function TmdbHeroInner({ items, type }: Props) {
         {/* Right poster */}
         {poster && (
           <div style={{ flexShrink: 0, display: 'none' }} className="hero-poster">
-            <div style={{ position: 'relative', width: 'clamp(160px, 14vw, 220px)' }}>
-              <div style={{ position: 'absolute', inset: '15%', background: 'rgba(255,255,255,0.06)', filter: 'blur(32px)', borderRadius: 20 }} />
-              <div style={{ position: 'relative', borderRadius: 14, overflow: 'hidden', boxShadow: '0 28px 64px -8px rgba(0,0,0,0.9)', outline: '1px solid rgba(255,255,255,0.1)', transform: 'rotate(1deg)' }}>
+            <div style={{ position: 'relative', width: 'clamp(160px, 14vw, 220px)', animation: 'floatSlow 6s ease-in-out infinite' }}>
+              <div style={{ position: 'absolute', inset: '15%', background: 'var(--gradient)', opacity: 0.25, filter: 'blur(40px)', borderRadius: 20 }} />
+              <div style={{ position: 'relative', borderRadius: 16, overflow: 'hidden', boxShadow: '0 28px 64px -8px rgba(0,0,0,0.9)', outline: '1px solid rgba(255,255,255,0.12)', transform: 'rotate(1deg)' }}>
                 <Image src={poster} alt={title} width={220} height={330} style={{ width: '100%', display: 'block' }} priority />
               </div>
             </div>
@@ -178,17 +184,17 @@ function TmdbHeroInner({ items, type }: Props) {
                 style={{
                   position: 'relative', flexShrink: 0,
                   width: active ? 'clamp(58px, 5.2vw, 78px)' : 'clamp(44px, 4vw, 60px)',
-                  aspectRatio: '2/3', borderRadius: 7, overflow: 'hidden',
-                  border: active ? '2px solid var(--accent)' : '2px solid rgba(255,255,255,0.08)',
+                  aspectRatio: '2/3', borderRadius: 8, overflow: 'hidden',
+                  border: active ? '2px solid var(--violet)' : '2px solid rgba(255,255,255,0.08)',
                   background: 'var(--surface2)', cursor: 'pointer', padding: 0,
                   opacity: active ? 1 : 0.45,
-                  boxShadow: active ? '0 0 12px rgba(212,152,42,0.25)' : 'none',
-                  transition: 'width .3s, opacity .2s, border-color .2s',
+                  boxShadow: active ? '0 0 16px rgba(139,92,246,0.4)' : 'none',
+                  transition: 'width .3s var(--ease-out), opacity .2s, border-color .2s',
                 }}>
                 {p && <Image src={p} alt={m.title ?? m.name ?? ''} fill sizes="78px" style={{ objectFit: 'cover' }} />}
                 {active && (
                   <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 3, background: 'rgba(0,0,0,0.5)' }}>
-                    <div key={`p-${current}`} style={{ height: '100%', background: 'var(--accent)', animation: `heroProgress ${INTERVAL_MS}ms linear forwards` }} />
+                    <div key={`p-${current}`} style={{ height: '100%', background: 'var(--gradient)', animation: `heroProgress ${INTERVAL_MS}ms linear forwards` }} />
                   </div>
                 )}
               </button>
@@ -200,6 +206,7 @@ function TmdbHeroInner({ items, type }: Props) {
             {(['←', '→'] as const).map((arrow, i) => (
               <button key={arrow}
                 onClick={() => goTo(i === 0 ? (current - 1 + items.length) % items.length : (current + 1) % items.length)}
+                className="btn-ghost"
                 style={{
                   width: 28, height: 28, borderRadius: '50%',
                   border: '1px solid var(--border)', background: 'var(--surface2)',
@@ -213,7 +220,6 @@ function TmdbHeroInner({ items, type }: Props) {
 
       <style>{`
         @media (min-width: 900px) { .hero-poster { display: block !important; } }
-        @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
         @keyframes heroProgress { from{width:0%} to{width:100%} }
       `}</style>
     </section>

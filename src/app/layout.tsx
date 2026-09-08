@@ -1,11 +1,10 @@
 import type { Metadata } from 'next'
-import { Bebas_Neue, Playfair_Display, Space_Grotesk } from 'next/font/google'
+import { Bricolage_Grotesque, Space_Grotesk } from 'next/font/google'
 import './globals.css'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 
-const bebasNeue = Bebas_Neue({ subsets: ['latin'], weight: '400', variable: '--font-bebas' })
-const playfair = Playfair_Display({ subsets: ['latin'], weight: ['400', '700'], style: ['normal', 'italic'], variable: '--font-playfair' })
+const bricolage = Bricolage_Grotesque({ subsets: ['latin'], weight: ['400', '500', '600', '700', '800'], variable: '--font-bricolage' })
 const spaceGrotesk = Space_Grotesk({ subsets: ['latin'], weight: ['300', '400', '500', '600', '700'], variable: '--font-space' })
 
 export const metadata: Metadata = {
@@ -15,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="es" className={`${bebasNeue.variable} ${playfair.variable} ${spaceGrotesk.variable}`}>
+    <html lang="es" className={`${bricolage.variable} ${spaceGrotesk.variable}`}>
       <body style={{ background: 'var(--bg)', color: 'var(--text)', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Navbar />
         <main style={{ flex: 1 }}>{children}</main>

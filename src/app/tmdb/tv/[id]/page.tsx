@@ -100,7 +100,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
               <p style={{ fontFamily: 'var(--font-display)', fontSize: 13, color: 'rgba(255,255,255,0.5)', fontStyle: 'italic' }}>&ldquo;{show.tagline}&rdquo;</p>
             )}
 
-            <h1 style={{ fontFamily: 'var(--font-bebas), sans-serif', fontSize: 'clamp(52px, 8vw, 110px)', fontWeight: 400, color: '#fff', letterSpacing: '2px', lineHeight: 0.88 }}>
+            <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(40px, 6.5vw, 84px)', fontWeight: 800, color: '#fff', letterSpacing: '-0.02em', lineHeight: 0.98 }}>
               {show.name}
             </h1>
 

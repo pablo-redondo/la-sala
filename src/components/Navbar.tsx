@@ -18,6 +18,7 @@ export default function Navbar() {
   const router = useRouter()
   const [q, setQ] = useState('')
   const [focused, setFocused] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
   const inputRef = useRef<HTMLInputElement>(null)
 
   function onSearch(e: React.FormEvent) {
@@ -39,38 +40,46 @@ export default function Navbar() {
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  useEffect(() => {
+    function onScroll() { setScrolled(window.scrollY > 8) }
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
     <header style={{
       position: 'sticky', top: 0, zIndex: 100,
-      height: 58,
+      height: 62,
       display: 'flex', alignItems: 'center',
-      background: 'rgba(13,11,8,0.97)',
+      background: scrolled ? 'rgba(8,7,13,0.85)' : 'rgba(8,7,13,0.55)',
       backdropFilter: 'blur(20px) saturate(160%)',
-      borderBottom: '1px solid rgba(240,236,227,0.07)',
+      borderBottom: `1px solid ${scrolled ? 'var(--border2)' : 'transparent'}`,
+      transition: 'background .3s var(--ease-out), border-color .3s var(--ease-out)',
     }}>
       <div className="page-inner" style={{ width: '100%', display: 'flex', alignItems: 'center' }}>
 
         {/* Logo — flex:1 left */}
         <div style={{ flex: 1, display: 'flex', alignItems: 'center' }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 9, textDecoration: 'none' }}>
-            <svg width="22" height="22" viewBox="0 0 32 32" fill="none">
-              <circle cx="16" cy="16" r="13" stroke="#d4982a" strokeWidth="1.5" opacity="0.9"/>
-              <circle cx="16" cy="16" r="7" stroke="#d4982a" strokeWidth="1.2" opacity="0.5"/>
-              <circle cx="16" cy="16" r="2.5" fill="#d4982a"/>
-              <circle cx="11.5" cy="11.5" r="1.4" fill="#f0ece3" opacity="0.45"/>
-              <circle cx="20.5" cy="11.5" r="1.4" fill="#f0ece3" opacity="0.45"/>
-              <circle cx="11.5" cy="20.5" r="1.4" fill="#f0ece3" opacity="0.45"/>
-              <circle cx="20.5" cy="20.5" r="1.4" fill="#f0ece3" opacity="0.45"/>
-            </svg>
+          <Link href="/" className="logo-mark" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
             <span style={{
-              fontFamily: 'var(--font-bebas), sans-serif',
+              position: 'relative', width: 26, height: 26, borderRadius: 8,
+              background: 'var(--gradient)', backgroundSize: '200% 200%',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              boxShadow: '0 0 18px -3px rgba(139,92,246,0.7)',
+              flexShrink: 0,
+            }} className="logo-glyph">
+              <svg width="13" height="13" viewBox="0 0 12 12" fill="#0a0812"><path d="M3 2l7 4-7 4V2z"/></svg>
+            </span>
+            <span style={{
+              fontFamily: 'var(--font-display)',
               fontSize: 19,
-              letterSpacing: '5px',
+              fontWeight: 800,
+              letterSpacing: '-0.02em',
               color: 'var(--text)',
               lineHeight: 1,
-              paddingTop: 2,
             }}>
-              LA SALA
+              La Sala
             </span>
           </Link>
         </div>
@@ -83,14 +92,14 @@ export default function Navbar() {
               <Link key={href} href={href} className={`nv${active ? ' nv-active' : ''}`}
                 style={{
                   padding: '0 14px',
-                  height: 58,
+                  height: 62,
                   display: 'flex', alignItems: 'center',
                   fontSize: 13,
-                  fontWeight: active ? 600 : 400,
+                  fontWeight: active ? 600 : 500,
                   textDecoration: 'none',
                   color: active ? 'var(--text)' : 'var(--muted2)',
                   position: 'relative',
-                  transition: 'color .15s',
+                  transition: 'color .2s',
                   whiteSpace: 'nowrap',
                 }}>
                 {label}
@@ -106,14 +115,15 @@ export default function Navbar() {
             <div style={{
               display: 'flex', alignItems: 'center', gap: 6,
               background: focused ? 'var(--surface2)' : 'rgba(255,255,255,0.04)',
-              border: `1px solid ${focused ? 'var(--border2)' : 'var(--border)'}`,
-              borderRadius: 8,
-              padding: '0 10px',
+              border: `1px solid ${focused ? 'var(--violet)' : 'var(--border)'}`,
+              borderRadius: 'var(--radius-full)',
+              padding: '0 12px',
               height: 34,
-              width: focused ? 210 : 140,
-              transition: 'width .2s ease, background .2s, border-color .2s',
+              width: focused ? 220 : 140,
+              transition: 'width .3s var(--ease-out), background .2s, border-color .2s, box-shadow .2s',
+              boxShadow: focused ? '0 0 0 3px rgba(139,92,246,0.15)' : 'none',
             }}>
-              <svg width="12" height="12" fill="none" stroke={focused ? 'var(--muted2)' : 'var(--muted)'} strokeWidth="2" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
+              <svg width="12" height="12" fill="none" stroke={focused ? 'var(--violet)' : 'var(--muted)'} strokeWidth="2" viewBox="0 0 24 24" style={{ flexShrink: 0 }}>
                 <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
               </svg>
               <input
@@ -138,15 +148,13 @@ export default function Navbar() {
             </div>
           </form>
 
-          {/* Mi lista — solid amber button */}
-          <Link href="/watchlist" style={{
+          {/* Mi lista — gradient button */}
+          <Link href="/watchlist" className="btn-gradient" style={{
             display: 'inline-flex', alignItems: 'center', gap: 6,
-            background: '#d4982a', color: '#0d0b08',
-            fontWeight: 700, fontSize: 12,
-            padding: '0 16px', height: 34, borderRadius: 8,
+            fontSize: 12,
+            padding: '0 16px', height: 34, borderRadius: 'var(--radius-full)',
             textDecoration: 'none', whiteSpace: 'nowrap',
             letterSpacing: '0.01em',
-            transition: 'background .15s',
           }}>
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
               <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
@@ -160,16 +168,21 @@ export default function Navbar() {
         .nv::after {
           content: '';
           position: absolute;
-          bottom: 0; left: 14px; right: 14px;
-          height: 1.5px;
-          background: var(--accent);
+          bottom: 8px; left: 14px; right: 14px;
+          height: 2px;
+          border-radius: 2px;
+          background: var(--gradient);
+          transform: scaleX(0);
+          transform-origin: left;
           opacity: 0;
-          transition: opacity .15s;
+          transition: transform .3s var(--ease-out), opacity .2s;
         }
-        .nv-active::after { opacity: 1; }
+        .nv-active::after { opacity: 1; transform: scaleX(1); }
         .nv:hover { color: var(--text) !important; }
-        .nv:hover::after { opacity: 0.5; }
+        .nv:hover::after { opacity: .6; transform: scaleX(1); }
         .nv-active:hover::after { opacity: 1; }
+        .logo-glyph { animation: gradientShift 6s ease infinite; transition: transform .3s var(--ease-out); }
+        .logo-mark:hover .logo-glyph { transform: rotate(-8deg) scale(1.08); }
       `}</style>
     </header>
   )
