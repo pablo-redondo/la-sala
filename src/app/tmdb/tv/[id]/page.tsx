@@ -71,7 +71,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
   const isEnded = show.status === 'Ended' || show.status === 'Canceled'
 
   const hasSidebarContent = show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0]
-    || contentRating || show.original_name || show.spoken_languages?.length || companies.length
+    || contentRating || show.original_name || show.spoken_languages?.length || companies.length || providers
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -166,13 +166,6 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
           </div>
         )}
 
-        {/* Where to watch — full width, right under seasons: the single most actionable info */}
-        {providers && (
-          <div style={{ marginTop: 28 }}>
-            <WatchProvidersSection providers={providers} />
-          </div>
-        )}
-
         {/* Content grid — main column + sidebar */}
         <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
 
@@ -246,6 +239,8 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
           {/* Sidebar */}
           {hasSidebarContent && (
             <Sidebar>
+              {providers && <WatchProvidersSection providers={providers} />}
+
               {(show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0] || contentRating || show.original_name || show.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>

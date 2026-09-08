@@ -81,7 +81,7 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
   const companies = (movie.production_companies ?? []).filter(c => c.logo_path).slice(0, 8)
 
   const hasSidebarContent = directors.length || writers.length || movie.release_date || movie.runtime || certification
-    || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length
+    || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length || providers
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -150,24 +150,6 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
           </div>
         </div>
 
-        {/* Collection banner — full width, right under the hero */}
-        {movie.belongs_to_collection && (
-          <Link href={`/tmdb/collection/${movie.belongs_to_collection.id}`} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, marginTop: 28, background: 'var(--gradient-soft)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: 'var(--radius-lg)', padding: '14px 20px', textDecoration: 'none', flexWrap: 'wrap' }}>
-            <div>
-              <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--violet)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>Parte de la saga</p>
-              <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{movie.belongs_to_collection.name}</p>
-            </div>
-            <span style={{ color: 'var(--text)', fontSize: 12, fontWeight: 600 }}>Ver saga →</span>
-          </Link>
-        )}
-
-        {/* Where to watch — full width, right under the hero: the single most actionable info */}
-        {providers && (
-          <div style={{ marginTop: 24 }}>
-            <WatchProvidersSection providers={providers} />
-          </div>
-        )}
-
         {/* Content grid — main column + sidebar */}
         <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
 
@@ -186,6 +168,17 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                 <SectionLabel>Reparto</SectionLabel>
                 <CastSection cast={cast} />
               </div>
+            )}
+
+            {/* Collection banner — lower down, inside the main column */}
+            {movie.belongs_to_collection && (
+              <Link href={`/tmdb/collection/${movie.belongs_to_collection.id}`} className="btn-ghost" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, background: 'var(--gradient-soft)', border: '1px solid rgba(139,92,246,0.25)', borderRadius: 'var(--radius-lg)', padding: '14px 20px', textDecoration: 'none', flexWrap: 'wrap' }}>
+                <div>
+                  <p style={{ fontSize: 9, fontWeight: 800, color: 'var(--violet)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 3 }}>Parte de la saga</p>
+                  <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--text)' }}>{movie.belongs_to_collection.name}</p>
+                </div>
+                <span style={{ color: 'var(--text)', fontSize: 12, fontWeight: 600 }}>Ver saga →</span>
+              </Link>
             )}
 
             {galleryBackdrops.length > 1 && (
@@ -241,6 +234,8 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
           {/* Sidebar */}
           {hasSidebarContent && (
             <Sidebar>
+              {providers && <WatchProvidersSection providers={providers} />}
+
               {(directors.length || writers.length || movie.release_date || movie.runtime || certification || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
