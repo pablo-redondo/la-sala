@@ -55,8 +55,8 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
             }}
           />
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(20,24,32,0.1) 0%, var(--bg) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(20,24,32,0.2) 55%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(8,7,13,0.1) 0%, var(--bg) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(8,7,13,0.2) 55%, transparent 100%)' }} />
       </div>
 
       <div className="page-inner" style={{ marginTop: -440, position: 'relative', zIndex: 10 }}>
@@ -114,13 +114,13 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
               {movie.imdbRating !== 'N/A' && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{ color: 'var(--accent)', fontSize: 20 }}>★</span>
+                    <span style={{ color: 'var(--gold)', fontSize: 20 }}>★</span>
                     <span style={{ color: '#fff', fontWeight: 900, fontSize: 24 }}>{movie.imdbRating}</span>
                     <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>/10 IMDb</span>
                   </div>
                   {ratingPercent !== null && (
-                    <div style={{ width: 52, height: 4, background: 'rgba(212,152,42,0.2)', borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ width: `${ratingPercent}%`, height: '100%', background: 'var(--accent)', borderRadius: 2 }} />
+                    <div style={{ width: 52, height: 4, background: 'rgba(251,191,36,0.2)', borderRadius: 2, overflow: 'hidden' }}>
+                      <div style={{ width: `${ratingPercent}%`, height: '100%', background: 'var(--gold)', borderRadius: 2 }} />
                     </div>
                   )}
                 </div>
@@ -153,11 +153,12 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
               <Link
                 href={`https://www.imdb.com/title/${movie.imdbID}/`}
                 target="_blank" rel="noopener noreferrer"
+                className="btn-ghost"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
-                  color: 'var(--accent)', fontSize: 13, fontWeight: 700,
-                  padding: '10px 18px', borderRadius: 10, textDecoration: 'none',
+                  background: 'rgba(255,255,255,0.08)', border: '1px solid var(--border2)',
+                  color: 'var(--text)', fontSize: 13, fontWeight: 700,
+                  padding: '10px 18px', borderRadius: 'var(--radius)', textDecoration: 'none',
                 }}
               >
                 IMDb ↗
@@ -182,10 +183,10 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
               <p style={{ fontSize: 17, fontWeight: 800, color: 'var(--text)' }}>{tmdb.collection.name}</p>
               <p style={{ fontSize: 12, color: 'var(--muted)', marginTop: 2 }}>{tmdb.collection.parts.length} películas</p>
             </div>
-            <Link href={`/tmdb/collection/${tmdb.collection.id}`} style={{
-              background: 'rgba(255,255,255,0.09)', border: '1px solid rgba(212,152,42,0.2)',
-              color: 'var(--accent)', fontSize: 12, fontWeight: 700,
-              padding: '8px 16px', borderRadius: 8, textDecoration: 'none', flexShrink: 0,
+            <Link href={`/tmdb/collection/${tmdb.collection.id}`} className="btn-ghost" style={{
+              background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.3)',
+              color: 'var(--violet)', fontSize: 12, fontWeight: 700,
+              padding: '8px 16px', borderRadius: 'var(--radius)', textDecoration: 'none', flexShrink: 0,
             }}>
               Ver saga completa →
             </Link>

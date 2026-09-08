@@ -6,7 +6,7 @@ const LOGO_BASE = 'https://image.tmdb.org/t/p/original'
 function ProviderLogo({ name, logo_path }: { name: string; logo_path: string }) {
   return (
     <div title={name} style={{
-      width: 44, height: 44, borderRadius: 10, overflow: 'hidden',
+      width: 44, height: 44, borderRadius: 10, overflow: 'hidden', transition: 'transform .2s var(--ease-out)',
       border: '1px solid rgba(255,255,255,0.1)',
       flexShrink: 0, position: 'relative',
       boxShadow: '0 2px 8px rgba(0,0,0,0.4)',
@@ -34,7 +34,7 @@ export default function WatchProvidersSection({ providers, tmdbLink }: Props) {
   if (!hasAny) {
     if (!link) return null
     return (
-      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 16, padding: '18px 20px' }}>
+      <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
         <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--muted)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 12 }}>Dónde verlo</p>
         <a href={link} target="_blank" rel="noopener noreferrer" style={{
           display: 'inline-flex', alignItems: 'center', gap: 8,
@@ -52,7 +52,7 @@ export default function WatchProvidersSection({ providers, tmdbLink }: Props) {
     <div style={{
       background: 'var(--surface)',
       border: '1px solid var(--border)',
-      borderRadius: 16,
+      borderRadius: 'var(--radius-lg)',
       padding: '18px 20px',
       display: 'flex', flexDirection: 'column', gap: 14,
     }}>

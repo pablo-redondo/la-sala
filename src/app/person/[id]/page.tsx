@@ -21,11 +21,11 @@ function CreditCard({ credit, type, role }: { credit: TmdbPersonCredit; type: 'm
           <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--muted)', fontSize: 28 }}>🎬</div>
         )}
         {credit.vote_average > 0 && (
-          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.85)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 7 }}>
+          <div style={{ position: 'absolute', top: 7, right: 7, background: 'rgba(0,0,0,0.85)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '3px 7px', borderRadius: 999 }}>
             ★ {credit.vote_average.toFixed(1)}
           </div>
         )}
-        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(99,102,241,0.85)' : 'rgba(239,68,68,0.85)', color: '#fff', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
+        <div style={{ position: 'absolute', top: 7, left: 7, background: type === 'tv' ? 'rgba(34,211,238,0.9)' : 'rgba(244,114,182,0.9)', color: '#0a0812', fontSize: 9, fontWeight: 800, padding: '2px 6px', borderRadius: 5 }}>
           {type === 'tv' ? 'SERIE' : 'PEL.'}
         </div>
       </div>
@@ -45,7 +45,7 @@ function CreditCard({ credit, type, role }: { credit: TmdbPersonCredit; type: 'm
 function SectionHeader({ title, count }: { title: string; count?: number }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
-      <div style={{ width: 2, height: 16, background: 'var(--accent)', borderRadius: 2, flexShrink: 0 }} />
+      <div style={{ width: 3, height: 16, background: 'var(--gradient)', borderRadius: 2, flexShrink: 0 }} />
       <h2 style={{ fontSize: 14, fontWeight: 800, color: 'var(--text)' }}>{title}</h2>
       {count !== undefined && <span style={{ fontSize: 11, color: 'var(--muted)' }}>{count}</span>}
     </div>
@@ -125,7 +125,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
             {/* Info */}
             <div style={{ flex: 1, minWidth: 220, display: 'flex', flexDirection: 'column', gap: 10 }}>
               <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
-                <span style={{ background: 'rgba(212,152,42,0.08)', border: '1px solid rgba(212,152,42,0.2)', color: 'var(--muted2)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 8px', borderRadius: 4 }}>
+                <span style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', color: 'rgba(255,255,255,0.75)', fontSize: 10, fontWeight: 700, letterSpacing: '0.08em', textTransform: 'uppercase', padding: '2px 8px', borderRadius: 4 }}>
                   {deptLabel}
                 </span>
                 {totalWorks > 0 && (
@@ -135,7 +135,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
                 )}
               </div>
 
-              <h1 style={{ fontSize: 'clamp(24px, 3.5vw, 44px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-1px', lineHeight: 1 }}>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 3.5vw, 46px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1 }}>
                 {detail.name}
               </h1>
 
@@ -160,11 +160,11 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
               )}
 
               {detail.imdb_id && (
-                <Link href={`https://www.imdb.com/name/${detail.imdb_id}/`} target="_blank" rel="noopener noreferrer" style={{
+                <Link href={`https://www.imdb.com/name/${detail.imdb_id}/`} target="_blank" rel="noopener noreferrer" className="btn-ghost" style={{
                   display: 'inline-flex', alignItems: 'center', gap: 6, alignSelf: 'flex-start',
-                  background: 'rgba(212,152,42,0.08)', border: '1px solid rgba(212,152,42,0.2)',
+                  background: 'rgba(255,255,255,0.06)', border: '1px solid var(--border2)',
                   color: 'var(--muted2)', fontSize: 12, fontWeight: 700,
-                  padding: '6px 14px', borderRadius: 6, textDecoration: 'none',
+                  padding: '6px 14px', borderRadius: 'var(--radius)', textDecoration: 'none',
                 }}>IMDb ↗</Link>
               )}
             </div>
@@ -238,8 +238,8 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
       </div>
 
       <style>{`
-        .credit-img { transition: transform .22s ease, box-shadow .22s ease; }
-        .credit-card:hover .credit-img { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.7); }
+        .credit-img { transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+        .credit-card:hover .credit-img { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.7), 0 0 0 1px rgba(139,92,246,0.3); }
         .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
       `}</style>

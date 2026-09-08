@@ -38,9 +38,9 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
             )}
             <div>
               {show?.name && <p style={{ fontSize: 11, color: 'var(--muted)', fontWeight: 600, marginBottom: 3 }}>{show.name}</p>}
-              <h1 style={{ fontSize: 'clamp(20px, 2.5vw, 30px)', fontWeight: 900, color: 'var(--text)', letterSpacing: '-0.5px', lineHeight: 1, marginBottom: 8 }}>{season.name}</h1>
+              <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(21px, 2.5vw, 32px)', fontWeight: 800, color: 'var(--text)', letterSpacing: '-0.02em', lineHeight: 1, marginBottom: 8 }}>{season.name}</h1>
               <div style={{ display: 'flex', gap: 8, alignItems: 'center', flexWrap: 'wrap' }}>
-                <span style={{ background: 'rgba(99,102,241,0.12)', border: '1px solid rgba(99,102,241,0.25)', color: '#a5b4fc', fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 4 }}>{episodes.length} ep.</span>
+                <span style={{ background: 'rgba(34,211,238,0.12)', border: '1px solid rgba(34,211,238,0.28)', color: '#67e8f9', fontSize: 11, fontWeight: 700, padding: '2px 10px', borderRadius: 4 }}>{episodes.length} ep.</span>
                 {season.air_date && <span style={{ fontSize: 11, color: 'var(--muted)' }}>{season.air_date.slice(0,4)}</span>}
               </div>
               {season.overview && (
@@ -76,7 +76,7 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 10, flexWrap: 'wrap', marginBottom: 4 }}>
                     <p style={{ fontSize: 15, fontWeight: 700, color: 'var(--text)', lineHeight: 1.3 }}>{ep.name}</p>
                     {hasRating && (
-                      <span style={{ fontSize: 11, color: 'var(--accent)', fontWeight: 800, flexShrink: 0 }}>★ {ep.vote_average.toFixed(1)}</span>
+                      <span style={{ fontSize: 11, color: 'var(--gold)', fontWeight: 800, flexShrink: 0 }}>★ {ep.vote_average.toFixed(1)}</span>
                     )}
                   </div>
                   <div style={{ display: 'flex', gap: 10, marginBottom: ep.overview ? 8 : 0 }}>
@@ -98,13 +98,15 @@ export default async function SeasonPage({ params }: { params: Promise<{ id: str
             <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--muted)', letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: 16 }}>Otras temporadas</p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
               {Array.from({ length: show.number_of_seasons }, (_, i) => i + 1).map(s => (
-                <Link key={s} href={`/tmdb/tv/${id}/temporada/${s}`} style={{
-                  padding: '8px 16px', borderRadius: 8,
-                  background: s === seasonNumber ? 'var(--accent)' : 'var(--surface2)',
-                  color: s === seasonNumber ? '#000' : 'var(--muted)',
-                  fontSize: 13, fontWeight: s === seasonNumber ? 800 : 500,
-                  textDecoration: 'none', border: '1px solid var(--border)',
-                }}>T{s}</Link>
+                <Link key={s} href={`/tmdb/tv/${id}/temporada/${s}`}
+                  className={s === seasonNumber ? 'btn-gradient' : 'btn-ghost'}
+                  style={{
+                    padding: '8px 16px', borderRadius: 'var(--radius)',
+                    background: s === seasonNumber ? undefined : 'var(--surface2)',
+                    color: s === seasonNumber ? undefined : 'var(--muted2)',
+                    fontSize: 13, fontWeight: s === seasonNumber ? 800 : 500,
+                    textDecoration: 'none', border: s === seasonNumber ? 'none' : '1px solid var(--border)',
+                  }}>T{s}</Link>
               ))}
             </div>
           </div>

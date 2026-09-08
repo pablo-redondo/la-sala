@@ -71,8 +71,8 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
           <Image src={backdrop ?? poster!} alt="" fill priority sizes="100vw"
             style={{ objectFit: 'cover', filter: 'brightness(0.3) saturate(1.2)' }} />
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(13,11,8,0.1) 0%, rgba(13,11,8,0.55) 60%, var(--bg) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(13,11,8,0.25) 50%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(8,7,13,0.1) 0%, rgba(8,7,13,0.55) 60%, var(--bg) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(8,7,13,0.25) 50%, transparent 100%)' }} />
       </div>
 
       <div className="page-inner" style={{ marginTop: -420, position: 'relative', zIndex: 10 }}>
@@ -91,7 +91,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
             {show.genres?.length > 0 && (
               <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap' }}>
                 {show.genres.slice(0, 4).map(g => (
-                  <Link key={g.id} href={`/discover?genre=${g.id}&type=tv`} style={{ background: 'rgba(212,152,42,0.08)', border: '1px solid rgba(212,152,42,0.12)', color: 'rgba(255,255,255,0.55)', fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 4, textDecoration: 'none' }}>{g.name}</Link>
+                  <Link key={g.id} href={`/discover?genre=${g.id}&type=tv`} className="pill-link" style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.22)', color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: 600, padding: '3px 10px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{g.name}</Link>
                 ))}
               </div>
             )}
@@ -107,7 +107,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
               {show.vote_average > 0 && (
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 3 }}>
-                  <span style={{ color: 'var(--accent)', fontSize: 14 }}>★</span>
+                  <span style={{ color: 'var(--gold)', fontSize: 14 }}>★</span>
                   <span style={{ color: '#fff', fontWeight: 900, fontSize: 18 }}>{show.vote_average.toFixed(1)}</span>
                   <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11 }}>/10 · {show.vote_count?.toLocaleString('es')} votos</span>
                 </div>
@@ -115,7 +115,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
               {show.first_air_date && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{show.first_air_date.slice(0, 4)}</span>}
               {show.number_of_seasons > 0 && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>· {show.number_of_seasons} temp. · {show.number_of_episodes} ep.</span>}
               {contentRating && (
-                <span style={{ background: 'rgba(212,152,42,0.08)', border: '1px solid rgba(212,152,42,0.2)', color: 'rgba(255,255,255,0.5)', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4 }}>{contentRating}</span>
+                <span style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 6 }}>{contentRating}</span>
               )}
               {show.status && (
                 <span style={{ background: isEnded ? 'rgba(239,68,68,0.12)' : 'rgba(34,197,94,0.12)', border: `1px solid ${isEnded ? 'rgba(239,68,68,0.25)' : 'rgba(34,197,94,0.25)'}`, color: isEnded ? '#fca5a5' : '#86efac', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 4 }}>
@@ -187,7 +187,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
             <p style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10 }}>Imágenes</p>
             <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 4 }} className="scrollbar-hide">
               {galleryBackdrops.map((img, i) => (
-                <div key={i} style={{ flexShrink: 0, borderRadius: 8, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9' }}>
+                <div key={i} className="gallery-thumb" style={{ flexShrink: 0, borderRadius: 10, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9', transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)' }}>
                   <Image src={`https://image.tmdb.org/t/p/w780${img.file_path}`} alt="" fill sizes="300px" style={{ objectFit: 'cover' }} />
                 </div>
               ))}
@@ -244,7 +244,7 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
                         <p style={{ fontSize: 10, color: 'var(--muted)' }}>{new Date(r.created_at).toLocaleDateString('es-ES', { year: 'numeric', month: 'long' })}</p>
                       </div>
                       {r.author_details?.rating != null && (
-                        <span style={{ marginLeft: 'auto', background: 'var(--accent2)', border: '1px solid rgba(212,152,42,0.2)', color: 'var(--accent)', fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>★ {r.author_details.rating}/10</span>
+                        <span style={{ marginLeft: 'auto', background: 'rgba(251,191,36,0.1)', border: '1px solid rgba(251,191,36,0.25)', color: 'var(--gold)', fontSize: 10, fontWeight: 800, padding: '2px 8px', borderRadius: 4, flexShrink: 0 }}>★ {r.author_details.rating}/10</span>
                       )}
                     </div>
                     <p style={{ fontSize: 12, color: 'var(--muted)', lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 5, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{r.content}</p>
@@ -285,6 +285,8 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
         .scrollbar-hide { scrollbar-width: none; -ms-overflow-style: none; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
         .season-card:hover .season-poster { transform: scale(1.05); }
+        .pill-link:hover { background: rgba(139,92,246,0.2) !important; border-color: rgba(139,92,246,0.4) !important; }
+        .gallery-thumb:hover { transform: translateY(-4px); box-shadow: 0 16px 32px -8px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.3); }
       `}</style>
     </div>
   )

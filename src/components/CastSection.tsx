@@ -52,8 +52,8 @@ export default function CastSection({ cast }: { cast: TmdbCastMember[] }) {
         })}
       </div>
       <style>{`
-        .cast-photo { transition: transform .2s ease, box-shadow .2s ease; }
-        .cast-photo:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.6); }
+        .cast-photo { transition: transform .3s var(--ease-out), box-shadow .3s var(--ease-out); }
+        .cast-photo:hover { transform: translateY(-3px); box-shadow: 0 12px 32px rgba(0,0,0,0.6), 0 0 0 1px rgba(139,92,246,0.3); }
       `}</style>
     </div>
   )

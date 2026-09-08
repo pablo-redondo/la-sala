@@ -52,8 +52,8 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
             }}
           />
         )}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(20,24,32,0.1) 0%, var(--bg) 100%)' }} />
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(20,24,32,0.2) 55%, transparent 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, rgba(8,7,13,0.1) 0%, var(--bg) 100%)' }} />
+        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to right, var(--bg) 0%, rgba(8,7,13,0.2) 55%, transparent 100%)' }} />
       </div>
 
       <div className="page-inner" style={{ marginTop: -440, position: 'relative', zIndex: 10 }}>
@@ -83,8 +83,8 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
 
             <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
               <span style={{
-                background: 'rgba(99,102,241,0.2)', border: '1px solid rgba(99,102,241,0.4)',
-                color: '#a5b4fc', fontSize: 10, fontWeight: 800,
+                background: 'rgba(34,211,238,0.2)', border: '1px solid rgba(34,211,238,0.4)',
+                color: '#67e8f9', fontSize: 10, fontWeight: 800,
                 padding: '4px 12px', borderRadius: 999, letterSpacing: '0.1em', textTransform: 'uppercase',
                 backdropFilter: 'blur(8px)',
               }}>Serie</span>
@@ -111,13 +111,13 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
               {show.imdbRating !== 'N/A' && (
                 <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                   <div style={{ display: 'flex', alignItems: 'baseline', gap: 4 }}>
-                    <span style={{ color: 'var(--accent)', fontSize: 20 }}>★</span>
+                    <span style={{ color: 'var(--gold)', fontSize: 20 }}>★</span>
                     <span style={{ color: '#fff', fontWeight: 900, fontSize: 24 }}>{show.imdbRating}</span>
                     <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: 13 }}>/10 IMDb</span>
                   </div>
                   {ratingPercent !== null && (
-                    <div style={{ width: 52, height: 4, background: 'rgba(212,152,42,0.2)', borderRadius: 2, overflow: 'hidden' }}>
-                      <div style={{ width: `${ratingPercent}%`, height: '100%', background: 'var(--accent)', borderRadius: 2 }} />
+                    <div style={{ width: 52, height: 4, background: 'rgba(251,191,36,0.2)', borderRadius: 2, overflow: 'hidden' }}>
+                      <div style={{ width: `${ratingPercent}%`, height: '100%', background: 'var(--gold)', borderRadius: 2 }} />
                     </div>
                   )}
                 </div>
@@ -125,8 +125,8 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
               {show.Year && <span style={{ background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.7)', fontSize: 13, padding: '3px 10px', borderRadius: 6 }}>{show.Year}</span>}
               {show.totalSeasons && (
                 <span style={{
-                  background: 'rgba(99,102,241,0.15)', border: '1px solid rgba(99,102,241,0.3)',
-                  color: '#a5b4fc', fontSize: 13, fontWeight: 700, padding: '3px 12px', borderRadius: 8,
+                  background: 'rgba(34,211,238,0.15)', border: '1px solid rgba(34,211,238,0.3)',
+                  color: '#67e8f9', fontSize: 13, fontWeight: 700, padding: '3px 12px', borderRadius: 8,
                 }}>
                   {show.totalSeasons} temp.
                 </span>
@@ -146,11 +146,12 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
               <Link
                 href={`https://www.imdb.com/title/${show.imdbID}/`}
                 target="_blank" rel="noopener noreferrer"
+                className="btn-ghost"
                 style={{
                   display: 'inline-flex', alignItems: 'center', gap: 8,
-                  background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.15)',
-                  color: 'var(--accent)', fontSize: 13, fontWeight: 700,
-                  padding: '10px 18px', borderRadius: 10, textDecoration: 'none',
+                  background: 'rgba(255,255,255,0.08)', border: '1px solid var(--border2)',
+                  color: 'var(--text)', fontSize: 13, fontWeight: 700,
+                  padding: '10px 18px', borderRadius: 'var(--radius)', textDecoration: 'none',
                 }}
               >IMDb ↗</Link>
             </div>
