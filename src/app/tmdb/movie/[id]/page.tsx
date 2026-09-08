@@ -208,7 +208,7 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
             {(movie.reviews?.results?.length ?? 0) > 0 && (
               <div>
                 <SectionLabel>Reseñas</SectionLabel>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))', gap: 12 }}>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 12 }}>
                   {movie.reviews.results.slice(0, 3).map(r => (
                     <div key={r.id} style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '16px 18px' }}>
                       <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
