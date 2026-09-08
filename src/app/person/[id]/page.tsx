@@ -1,7 +1,10 @@
+export const revalidate = 3600
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPersonDetail, getPosterUrl } from '@/services/tmdb'
+import { isTmdbId } from '@/lib/ids'
 import type { TmdbPersonCredit } from '@/services/tmdb'
 
 function CreditCard({ credit, type, role }: { credit: TmdbPersonCredit; type: 'movie' | 'tv'; role?: string }) {
@@ -51,6 +54,8 @@ function SectionHeader({ title, count }: { title: string; count?: number }) {
 
 export default async function PersonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  if (!isTmdbId(id)) notFound()
+
   const data = await getPersonDetail(id)
   if (!data) notFound()
 

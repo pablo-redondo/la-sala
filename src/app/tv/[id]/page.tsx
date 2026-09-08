@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,6 +6,7 @@ import { notFound, redirect } from 'next/navigation'
 import { getTVDetail } from '@/services/tv'
 import { normalizePoster } from '@/lib/omdb'
 import { getTVEnhancement, getBackdropUrl } from '@/services/tmdb'
+import { isImdbId } from '@/lib/ids'
 import WatchlistButton from '@/components/WatchlistButton'
 import CastSection from '@/components/CastSection'
 import TmdbCarousel from '@/components/TmdbCarousel'
@@ -14,6 +15,8 @@ import TrailerButton from '@/components/TrailerButton'
 
 export default async function TVDetailPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  if (!isImdbId(id)) notFound()
+
   const [show, tmdb] = await Promise.all([
     getTVDetail(id),
     getTVEnhancement(id),

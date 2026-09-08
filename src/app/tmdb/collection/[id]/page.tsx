@@ -1,10 +1,15 @@
+export const revalidate = 3600
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getCollection, getBackdropUrl, getPosterUrl } from '@/services/tmdb'
+import { isTmdbId } from '@/lib/ids'
 
 export default async function CollectionPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  if (!isTmdbId(id)) notFound()
+
   const collection = await getCollection(id)
   if (!collection) notFound()
 

@@ -1,7 +1,10 @@
+export const revalidate = 3600
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getTmdbTVDetail, getBackdropUrl, getPosterUrl } from '@/services/tmdb'
+import { isTmdbId } from '@/lib/ids'
 import CastSection from '@/components/CastSection'
 import TmdbCarousel from '@/components/TmdbCarousel'
 import WatchProvidersSection from '@/components/WatchProvidersSection'
@@ -37,6 +40,8 @@ function MetaGrid({ items }: { items: { label: string; value: string | null }[] 
 
 export default async function TmdbTVPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  if (!isTmdbId(id)) notFound()
+
   const show = await getTmdbTVDetail(id)
   if (!show) notFound()
 

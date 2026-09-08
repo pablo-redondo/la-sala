@@ -1,12 +1,15 @@
+export const revalidate = 3600
+
 import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getTVSeason, getTmdbTVDetail, getPosterUrl } from '@/services/tmdb'
+import { isTmdbId } from '@/lib/ids'
 
 export default async function SeasonPage({ params }: { params: Promise<{ id: string; n: string }> }) {
   const { id, n } = await params
-  const seasonNumber = parseInt(n)
-  if (isNaN(seasonNumber)) notFound()
+  if (!isTmdbId(id) || !/^\d{1,3}$/.test(n)) notFound()
+  const seasonNumber = parseInt(n, 10)
 
   const [season, show] = await Promise.all([
     getTVSeason(id, seasonNumber),

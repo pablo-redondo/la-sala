@@ -1,4 +1,4 @@
-export const dynamic = 'force-dynamic'
+export const revalidate = 3600
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -6,6 +6,7 @@ import { notFound, redirect } from 'next/navigation'
 import { getMovieDetail } from '@/services/movies'
 import { normalizePoster } from '@/lib/omdb'
 import { getMovieEnhancement } from '@/services/tmdb'
+import { isImdbId } from '@/lib/ids'
 import WatchlistButton from '@/components/WatchlistButton'
 import CastSection from '@/components/CastSection'
 import TmdbCarousel from '@/components/TmdbCarousel'
@@ -14,6 +15,8 @@ import TrailerButton from '@/components/TrailerButton'
 
 export default async function MoviePage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params
+  if (!isImdbId(id)) notFound()
+
   const [movie, tmdb] = await Promise.all([
     getMovieDetail(id),
     getMovieEnhancement(id),
