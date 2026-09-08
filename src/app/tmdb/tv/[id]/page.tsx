@@ -70,8 +70,8 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
   const companies = (show.production_companies ?? []).filter(c => c.logo_path).slice(0, 8)
   const isEnded = show.status === 'Ended' || show.status === 'Canceled'
 
-  const hasSidebarContent = show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0]
-    || contentRating || show.original_name || show.spoken_languages?.length || providers || companies.length
+  const hasSidebarContent = show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0]
+    || contentRating || show.original_name || show.spoken_languages?.length || companies.length
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -166,6 +166,13 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
           </div>
         )}
 
+        {/* Where to watch — full width, right under seasons: the single most actionable info */}
+        {providers && (
+          <div style={{ marginTop: 28 }}>
+            <WatchProvidersSection providers={providers} />
+          </div>
+        )}
+
         {/* Content grid — main column + sidebar */}
         <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
 
@@ -179,6 +186,13 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
               </div>
             )}
 
+            {cast.length > 0 && (
+              <div>
+                <SectionLabel>Reparto</SectionLabel>
+                <CastSection cast={cast} />
+              </div>
+            )}
+
             {galleryBackdrops.length > 1 && (
               <div>
                 <SectionLabel>Imágenes</SectionLabel>
@@ -187,35 +201,6 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
                     <div key={i} className="gallery-thumb" style={{ flexShrink: 0, borderRadius: 10, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9', background: 'var(--surface2)', transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)' }}>
                       <Image src={`https://image.tmdb.org/t/p/w780${img.file_path}`} alt="" fill sizes="300px" style={{ objectFit: 'cover' }} />
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {cast.length > 0 && (
-              <div>
-                <SectionLabel>Reparto</SectionLabel>
-                <CastSection cast={cast} />
-              </div>
-            )}
-
-            {(show.created_by?.length ?? 0) > 0 && (
-              <div>
-                <SectionLabel>Creado por</SectionLabel>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {show.created_by!.map(c => (
-                    <span key={c.id} style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--text)', fontSize: 12, fontWeight: 600, padding: '5px 13px', borderRadius: 999 }}>{c.name}</span>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {(show.keywords?.results?.length ?? 0) > 0 && (
-              <div>
-                <SectionLabel>Temas</SectionLabel>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {show.keywords.results.slice(0, 20).map(kw => (
-                    <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 500, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
                   ))}
                 </div>
               </div>
@@ -245,15 +230,27 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
                 </div>
               </div>
             )}
+
+            {(show.keywords?.results?.length ?? 0) > 0 && (
+              <div>
+                <SectionLabel>Temas</SectionLabel>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {show.keywords.results.slice(0, 12).map(kw => (
+                    <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, fontWeight: 500, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
           {hasSidebarContent && (
             <Sidebar>
-              {(show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0] || contentRating || show.original_name || show.spoken_languages?.length) ? (
+              {(show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0] || contentRating || show.original_name || show.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
                   <div>
+                    <FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} />
                     <FactRow label="Red" value={show.networks?.map(n => n.name).join(', ') || null} />
                     <FactRow label="Estreno" value={show.first_air_date || null} />
                     <FactRow label="Último ep." value={show.last_air_date || null} />
@@ -262,25 +259,23 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
                     <FactRow label="Idioma orig." value={show.original_name ?? null} />
                     <FactRow label="Idiomas" value={show.spoken_languages?.map(l => l.name).join(', ') || null} />
                   </div>
+
+                  {companies.length > 0 && (
+                    <div style={{ paddingTop: 12 }}>
+                      <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 9 }}>Producción</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+                        {companies.map(c => (
+                          <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 32, width: 68, flexShrink: 0 }}>
+                            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                              <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="68px" style={{ objectFit: 'contain' }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : null}
-
-              {providers && <WatchProvidersSection providers={providers} />}
-
-              {companies.length > 0 && (
-                <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
-                  <SectionLabel>Producción</SectionLabel>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
-                    {companies.map(c => (
-                      <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 34, width: 72, flexShrink: 0 }}>
-                        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                          <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="72px" style={{ objectFit: 'contain' }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </Sidebar>
           )}
         </div>

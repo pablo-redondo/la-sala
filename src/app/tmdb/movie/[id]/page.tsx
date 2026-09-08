@@ -81,7 +81,7 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
   const companies = (movie.production_companies ?? []).filter(c => c.logo_path).slice(0, 8)
 
   const hasSidebarContent = directors.length || writers.length || movie.release_date || movie.runtime || certification
-    || movie.budget || movie.revenue || movie.spoken_languages?.length || providers || companies.length
+    || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
@@ -161,6 +161,13 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
           </Link>
         )}
 
+        {/* Where to watch — full width, right under the hero: the single most actionable info */}
+        {providers && (
+          <div style={{ marginTop: 24 }}>
+            <WatchProvidersSection providers={providers} />
+          </div>
+        )}
+
         {/* Content grid — main column + sidebar */}
         <div style={{ marginTop: 40, display: 'grid', gridTemplateColumns: hasSidebarContent ? 'minmax(0,1fr) minmax(0,300px)' : 'minmax(0,1fr)', gap: 44, alignItems: 'start' }} className="detail-grid">
 
@@ -174,6 +181,13 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
               </div>
             )}
 
+            {cast.length > 0 && (
+              <div>
+                <SectionLabel>Reparto</SectionLabel>
+                <CastSection cast={cast} />
+              </div>
+            )}
+
             {galleryBackdrops.length > 1 && (
               <div>
                 <SectionLabel>Imágenes</SectionLabel>
@@ -182,24 +196,6 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                     <div key={i} className="gallery-thumb" style={{ flexShrink: 0, borderRadius: 10, overflow: 'hidden', position: 'relative', width: 'clamp(180px, 22vw, 300px)', aspectRatio: '16/9', background: 'var(--surface2)', transition: 'transform .3s var(--ease-out), box-shadow .3s var(--ease-out)' }}>
                       <Image src={`https://image.tmdb.org/t/p/w780${img.file_path}`} alt="" fill sizes="300px" style={{ objectFit: 'cover' }} />
                     </div>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {cast.length > 0 && (
-              <div>
-                <SectionLabel>Reparto</SectionLabel>
-                <CastSection cast={cast} />
-              </div>
-            )}
-
-            {(movie.keywords?.keywords?.length ?? 0) > 0 && (
-              <div>
-                <SectionLabel>Temas</SectionLabel>
-                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
-                  {movie.keywords.keywords.slice(0, 20).map(kw => (
-                    <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
                   ))}
                 </div>
               </div>
@@ -229,12 +225,23 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                 </div>
               </div>
             )}
+
+            {(movie.keywords?.keywords?.length ?? 0) > 0 && (
+              <div>
+                <SectionLabel>Temas</SectionLabel>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {movie.keywords.keywords.slice(0, 12).map(kw => (
+                    <Link key={kw.id} href={`/search?q=${encodeURIComponent(kw.name)}`} className="pill-link" style={{ background: 'var(--surface2)', border: '1px solid var(--border)', color: 'var(--muted2)', fontSize: 11, padding: '4px 11px', borderRadius: 999, textDecoration: 'none', transition: 'background .2s var(--ease-out), border-color .2s var(--ease-out)' }}>{kw.name}</Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           {/* Sidebar */}
           {hasSidebarContent && (
             <Sidebar>
-              {(directors.length || writers.length || movie.release_date || movie.runtime || certification || movie.budget || movie.revenue || movie.spoken_languages?.length) ? (
+              {(directors.length || writers.length || movie.release_date || movie.runtime || certification || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
                   <div>
@@ -247,25 +254,23 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                     <FactRow label="Recaudación" value={movie.revenue ? `$${(movie.revenue / 1e6).toFixed(0)}M` : null} />
                     <FactRow label="Idiomas" value={movie.spoken_languages?.map(l => l.name).join(', ') || null} />
                   </div>
+
+                  {companies.length > 0 && (
+                    <div style={{ paddingTop: 12 }}>
+                      <p style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 9 }}>Producción</p>
+                      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
+                        {companies.map(c => (
+                          <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 32, width: 68, flexShrink: 0 }}>
+                            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+                              <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="68px" style={{ objectFit: 'contain' }} />
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                 </div>
               ) : null}
-
-              {providers && <WatchProvidersSection providers={providers} />}
-
-              {companies.length > 0 && (
-                <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
-                  <SectionLabel>Producción</SectionLabel>
-                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, alignItems: 'center' }}>
-                    {companies.map(c => (
-                      <div key={c.id} title={c.name} style={{ background: '#fff', borderRadius: 6, padding: '5px 10px', display: 'flex', alignItems: 'center', justifyContent: 'center', height: 34, width: 72, flexShrink: 0 }}>
-                        <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-                          <Image src={`https://image.tmdb.org/t/p/w185${c.logo_path}`} alt={c.name} fill sizes="72px" style={{ objectFit: 'contain' }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              )}
             </Sidebar>
           )}
         </div>
