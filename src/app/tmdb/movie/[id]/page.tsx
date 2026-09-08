@@ -239,9 +239,9 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
               {(directors.length || writers.length || movie.release_date || movie.runtime || certification || movie.budget || movie.revenue || movie.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
-                  <div>
-                    <FactRow label="Dirección" value={directors.map(d => d.name).join(', ') || null} />
-                    <FactRow label="Guion" value={writers.map(w => w.name).join(', ') || null} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
+                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Dirección" value={directors.map(d => d.name).join(', ') || null} /></div>
+                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Guion" value={writers.map(w => w.name).join(', ') || null} /></div>
                     <FactRow label="Estreno" value={movie.release_date || null} />
                     <FactRow label="Duración" value={movie.runtime ? `${movie.runtime} min` : null} />
                     <FactRow label="Clasificación" value={certification} />

@@ -244,9 +244,9 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
               {(show.created_by?.length || show.networks?.length || show.first_air_date || show.last_air_date || show.episode_run_time?.[0] || contentRating || show.original_name || show.spoken_languages?.length || companies.length) ? (
                 <div style={{ background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                   <SectionLabel>Ficha técnica</SectionLabel>
-                  <div>
-                    <FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} />
-                    <FactRow label="Red" value={show.networks?.map(n => n.name).join(', ') || null} />
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
+                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} /></div>
+                    <div style={{ gridColumn: '1 / -1' }}><FactRow label="Red" value={show.networks?.map(n => n.name).join(', ') || null} /></div>
                     <FactRow label="Estreno" value={show.first_air_date || null} />
                     <FactRow label="Último ep." value={show.last_air_date || null} />
                     <FactRow label="Duración ep." value={show.episode_run_time?.[0] ? `${show.episode_run_time[0]} min` : null} />
