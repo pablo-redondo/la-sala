@@ -141,13 +141,7 @@ export default async function MoviePage({ params }: { params: Promise<{ id: stri
               )}
             </div>
 
-            {movie.Plot && movie.Plot !== 'N/A' && (
-              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 14, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '60ch' }}>
-                {movie.Plot}
-              </p>
-            )}
-
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 2 }}>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 4 }}>
               <WatchlistButton movie={movie} />
               {tmdb?.trailerKey && <TrailerButton videoKey={tmdb.trailerKey} />}
               <Link

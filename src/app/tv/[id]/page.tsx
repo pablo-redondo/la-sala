@@ -134,13 +134,7 @@ export default async function TVDetailPage({ params }: { params: Promise<{ id: s
               {show.Runtime && show.Runtime !== 'N/A' && <span style={{ color: 'rgba(255,255,255,0.55)', fontSize: 13 }}>{show.Runtime}/ep</span>}
             </div>
 
-            {show.Plot && show.Plot !== 'N/A' && (
-              <p style={{ color: 'rgba(255,255,255,0.65)', fontSize: 14, lineHeight: 1.65, display: '-webkit-box', WebkitLineClamp: 3, WebkitBoxOrient: 'vertical', overflow: 'hidden', maxWidth: '60ch' }}>
-                {show.Plot}
-              </p>
-            )}
-
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 2 }}>
+            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap', paddingTop: 4 }}>
               <WatchlistButton movie={show} />
               {tmdb?.trailerKey && <TrailerButton videoKey={tmdb.trailerKey} />}
               <Link
