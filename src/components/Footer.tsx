@@ -53,12 +53,12 @@ export default function Footer() {
 
           {/* Data attribution */}
           <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-            <span style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.7 }}>Datos:</span>
+            <span style={{ fontSize: 10, color: 'var(--muted)' }}>Datos:</span>
             <a href="https://www.themoviedb.org" target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.7, textDecoration: 'none' }}>TMDB</a>
-            <span style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.4 }}>·</span>
+              style={{ fontSize: 10, color: 'var(--muted)', textDecoration: 'none' }}>TMDB</a>
+            <span style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.5 }}>·</span>
             <a href="https://www.omdbapi.com" target="_blank" rel="noopener noreferrer"
-              style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.7, textDecoration: 'none' }}>OMDb</a>
+              style={{ fontSize: 10, color: 'var(--muted)', textDecoration: 'none' }}>OMDb</a>
           </div>
         </div>
 

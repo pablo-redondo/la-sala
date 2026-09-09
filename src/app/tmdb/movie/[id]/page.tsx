@@ -94,7 +94,7 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
 
       <div className="page-inner" style={{ marginTop: -380, position: 'relative', zIndex: 10 }}>
 
-        <Link href="/discover" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.45)', fontSize: 12, fontWeight: 600, textDecoration: 'none', marginBottom: 20 }}>← Descubrir</Link>
+        <Link href="/discover" style={{ display: 'inline-flex', alignItems: 'center', gap: 6, color: 'rgba(255,255,255,0.62)', fontSize: 12, fontWeight: 600, textDecoration: 'none', marginBottom: 20 }}>← Descubrir</Link>
 
         {/* Hero row */}
         <div style={{ display: 'flex', gap: 28, alignItems: 'flex-end' }} className="hero-row">
@@ -126,11 +126,11 @@ export default async function TmdbMoviePage({ params }: { params: Promise<{ id: 
                 <div style={{ display: 'flex', alignItems: 'baseline', gap: 3 }}>
                   <span style={{ color: 'var(--gold)', fontSize: 14 }}>★</span>
                   <span style={{ color: '#fff', fontWeight: 900, fontSize: 18 }}>{movie.vote_average.toFixed(1)}</span>
-                  <span style={{ color: 'rgba(255,255,255,0.3)', fontSize: 11 }}>/10 · {movie.vote_count?.toLocaleString('es')} votos</span>
+                  <span style={{ color: 'rgba(255,255,255,0.58)', fontSize: 11 }}>/10 · {movie.vote_count?.toLocaleString('es')} votos</span>
                 </div>
               )}
-              {movie.release_date && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>{movie.release_date.slice(0, 4)}</span>}
-              {movie.runtime && <span style={{ color: 'rgba(255,255,255,0.4)', fontSize: 12 }}>· {movie.runtime} min</span>}
+              {movie.release_date && <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>{movie.release_date.slice(0, 4)}</span>}
+              {movie.runtime && <span style={{ color: 'rgba(255,255,255,0.6)', fontSize: 12 }}>· {movie.runtime} min</span>}
               {certification && (
                 <span style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.25)', color: 'rgba(255,255,255,0.7)', fontSize: 10, fontWeight: 700, padding: '2px 8px', borderRadius: 6 }}>{certification}</span>
               )}

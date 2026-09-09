@@ -39,7 +39,7 @@ function RankedRow({ item, rank, type }: { item: TmdbMovieResult; rank: number; 
 
   return (
     <Link href={`/tmdb/${type}/${item.id}`} style={{ textDecoration: 'none', display: 'flex', gap: 10, alignItems: 'center', padding: '7px 0', borderBottom: '1px solid var(--border)' }} className="top-row">
-      <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', opacity: rank <= 10 ? 0.6 : 0.3, width: 22, textAlign: 'right', flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontFamily: 'var(--font-ui)' }}>{rank}</span>
+      <span style={{ fontSize: 10, fontWeight: 700, color: 'var(--muted)', width: 22, textAlign: 'right', flexShrink: 0, fontVariantNumeric: 'tabular-nums', fontFamily: 'var(--font-ui)' }}>{rank}</span>
       <div style={{ width: 28, height: 42, borderRadius: 3, overflow: 'hidden', background: 'var(--surface2)', flexShrink: 0, position: 'relative' }}>
         {poster && <Image src={poster} alt={title} fill sizes="28px" style={{ objectFit: 'cover' }} />}
       </div>
@@ -74,7 +74,7 @@ function MiniRankedRow({ item, rank, type }: { item: TmdbMovieResult; rank: numb
 
   return (
     <Link href={`/tmdb/${type}/${item.id}`} style={{ textDecoration: 'none', display: 'flex', gap: 8, alignItems: 'center', padding: '5px 0', borderBottom: '1px solid var(--border)' }} className="top-row">
-      <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', opacity: 0.4, width: 16, textAlign: 'right', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{rank}</span>
+      <span style={{ fontSize: 9, fontWeight: 700, color: 'var(--muted)', width: 16, textAlign: 'right', flexShrink: 0, fontVariantNumeric: 'tabular-nums' }}>{rank}</span>
       <div style={{ width: 24, height: 36, borderRadius: 3, overflow: 'hidden', background: 'var(--surface2)', flexShrink: 0, position: 'relative' }}>
         {poster && <Image src={poster} alt={title} fill sizes="24px" style={{ objectFit: 'cover' }} />}
       </div>

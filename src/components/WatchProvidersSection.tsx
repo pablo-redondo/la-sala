@@ -68,7 +68,7 @@ export default function WatchProvidersSection({ providers, tmdbLink }: Props) {
             href={tmdbLink}
             target="_blank"
             rel="noopener noreferrer"
-            style={{ fontSize: 10, color: 'var(--muted)', textDecoration: 'none', opacity: 0.6 }}
+            style={{ fontSize: 10, color: 'var(--muted)', textDecoration: 'none' }}
           >
             JustWatch ↗
           </a>
@@ -114,7 +114,7 @@ export default function WatchProvidersSection({ providers, tmdbLink }: Props) {
         </div>
       )}
 
-      <p style={{ fontSize: 10, color: 'rgba(136,146,164,0.4)', marginTop: -4 }}>
+      <p style={{ fontSize: 10, color: 'var(--muted)', marginTop: -4 }}>
         Datos de JustWatch vía TMDB · Disponibilidad en España
       </p>
     </div>

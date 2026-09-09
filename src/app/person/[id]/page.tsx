@@ -33,7 +33,7 @@ function CreditCard({ credit, type, role }: { credit: TmdbPersonCredit; type: 'm
       <div style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
         {year && <p style={{ fontSize: 11, color: 'var(--muted)' }}>{year}</p>}
         {(credit.character || role) && (
-          <p style={{ fontSize: 10, color: 'var(--muted)', opacity: 0.65, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+          <p style={{ fontSize: 10, color: 'var(--muted)', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
             {credit.character ?? role}
           </p>
         )}

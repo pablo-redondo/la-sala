@@ -133,13 +133,13 @@ function HeroCarouselInner({ movies }: { movies: OmdbDetail[] }) {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
             {director && (
               <p style={{ fontSize: 12, color: 'var(--muted)', margin: 0 }}>
-                <span style={{ color: 'rgba(255,255,255,0.45)', fontWeight: 700, marginRight: 6 }}>Dirección</span>
+                <span style={{ color: 'rgba(255,255,255,0.62)', fontWeight: 700, marginRight: 6 }}>Dirección</span>
                 {director}
               </p>
             )}
             {cast && (
               <p style={{ fontSize: 12, color: 'var(--muted)', margin: 0 }}>
-                <span style={{ color: 'rgba(255,255,255,0.45)', fontWeight: 700, marginRight: 6 }}>Reparto</span>
+                <span style={{ color: 'rgba(255,255,255,0.62)', fontWeight: 700, marginRight: 6 }}>Reparto</span>
                 {cast}
               </p>
             )}

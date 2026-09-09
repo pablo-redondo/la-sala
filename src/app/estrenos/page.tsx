@@ -56,7 +56,7 @@ function UpcomingRow({ movie }: { movie: TmdbMovieResult }) {
           </p>
         )}
         {movie.overview && (
-          <p style={{ fontSize: 11, color: 'var(--muted)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden', opacity: 0.7 }}>{movie.overview}</p>
+          <p style={{ fontSize: 11, color: 'var(--muted)', lineHeight: 1.5, display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', overflow: 'hidden' }}>{movie.overview}</p>
         )}
       </div>
       {rating && (

@@ -12,7 +12,7 @@ export default function CastSection({ cast }: { cast: TmdbCastMember[] }) {
         <p style={{ fontSize: 11, fontWeight: 800, color: 'var(--muted)', letterSpacing: '0.12em', textTransform: 'uppercase' }}>
           Reparto principal
         </p>
-        <span style={{ fontSize: 11, color: 'var(--muted)', opacity: 0.6 }}>{cast.length} actores</span>
+        <span style={{ fontSize: 11, color: 'var(--muted)' }}>{cast.length} actores</span>
       </div>
       <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8 }} className="scrollbar-hide">
         {cast.map(member => {
@@ -43,7 +43,7 @@ export default function CastSection({ cast }: { cast: TmdbCastMember[] }) {
                 {member.name}
               </p>
               {member.character && (
-                <p style={{ fontSize: 10, color: 'var(--muted)', marginTop: 2, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: 0.8 }}>
+                <p style={{ fontSize: 10, color: 'var(--muted)', marginTop: 2, lineHeight: 1.3, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                   {member.character.split('/')[0].trim()}
                 </p>
               )}

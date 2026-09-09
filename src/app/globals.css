@@ -24,8 +24,8 @@
   /* Text */
   --text:      #f5f3fb;
   --text2:     rgba(245,243,251,0.68);
-  --muted:     #635c73;
-  --muted2:    #a89fbd;
+  --muted:     #8f87a0;
+  --muted2:    #b8b0cc;
 
   /* Typography */
   --font-display: var(--font-bricolage), 'Segoe UI', sans-serif;
