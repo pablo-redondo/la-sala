@@ -232,13 +232,13 @@ export default async function TmdbTVPage({ params }: { params: Promise<{ id: str
             {(providers || hasFacts) && (
               <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, alignItems: 'flex-start' }}>
                 {providers && (
-                  <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420 }}>
+                  <div style={{ flex: '1 1 320px', minWidth: 260 }}>
                     <WatchProvidersSection providers={providers} />
                   </div>
                 )}
 
                 {hasFacts ? (
-                  <div style={{ flex: '1 1 300px', minWidth: 260, maxWidth: 420, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
+                  <div style={{ flex: '1 1 320px', minWidth: 260, background: 'var(--surface)', border: '1px solid var(--border)', borderRadius: 'var(--radius-lg)', padding: '18px 20px' }}>
                     <SectionLabel>Ficha técnica</SectionLabel>
                     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', columnGap: 16 }}>
                       <div style={{ gridColumn: '1 / -1' }}><FactRow label="Creador/a" value={show.created_by?.map(c => c.name).join(', ') || null} /></div>

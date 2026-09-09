@@ -53,7 +53,7 @@ body {
 }
 
 /* ── Layout containers ─────────────────────────────────────────────────────── */
-.page-inner   { padding-left: var(--page-pad); padding-right: var(--page-pad); }
+.page-inner   { max-width: 1400px; margin-left: auto; margin-right: auto; padding-left: var(--page-pad); padding-right: var(--page-pad); }
 .page-offset-l { padding-left: var(--page-pad); }
 .page-offset-r { padding-right: var(--page-pad); }
 .page-offset   { padding-left: var(--page-pad); padding-right: var(--page-pad); }
